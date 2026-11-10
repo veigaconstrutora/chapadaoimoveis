@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapadão Imóveis · Marcio Veiga</title>
+<meta name="description" content="Casas, terrenos e apartamentos em Chapadão do Sul, Costa Rica, Paraíso das Águas e Figueirão. Corretor Marcio Veiga, CRECI-MS 14735. Simulação de financiamento e MCMV.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --verde:#1f4d3a; --verde-esc:#143528; --verde-claro:#e8f0ea;
+    --ouro:#c8963e; --ouro-claro:#f6ecd9;
+    --texto:#1d2420; --suave:#5c6862; --linha:#e3e7e4; --fundo:#fbfaf7; --branco:#fff;
+    --zap:#1faa59; --raio:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,sans-serif;color:var(--texto);background:var(--fundo);line-height:1.5;-webkit-font-smoothing:antialiased}
+  body.travado{overflow:hidden}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+  header{position:sticky;top:0;z-index:20;background:rgba(251,250,247,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--linha)}
+  .topo{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+  .marca{display:flex;align-items:center;gap:10px;min-width:0}
+  .marca-icone{flex:0 0 38px;height:38px;border-radius:10px;background:var(--verde);display:grid;place-items:center}
+  .marca-nome{font-family:Fraunces,serif;font-weight:700;font-size:19px;color:var(--verde);line-height:1;white-space:nowrap}
+  .marca-sub{font-size:11px;color:var(--suave);letter-spacing:.04em;white-space:nowrap}
+  nav.menu{display:flex;gap:24px;font-size:14px;font-weight:500;color:var(--suave)}
+  nav.menu a:hover{color:var(--verde)}
+  .topo-dir{display:flex;gap:8px;align-items:center}
+  .btn-fav-topo{position:relative;width:40px;height:40px;border-radius:50%;border:1px solid var(--linha);background:var(--branco);display:grid;place-items:center;cursor:pointer}
+  .btn-fav-topo b{position:absolute;top:-4px;right:-4px;background:var(--ouro);color:#fff;font-size:11px;min-width:18px;height:18px;border-radius:9px;display:none;place-items:center;padding:0 4px}
+  .btn-fav-topo b.on{display:grid}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:15px;border-radius:999px;padding:12px 22px;border:0;cursor:pointer;transition:transform .15s,background .15s}
+  .btn:active{transform:scale(.97)}
+  .btn-zap{background:var(--zap);color:#fff}
+  .btn-zap:hover{background:#178a48}
+  .btn-verde{background:var(--verde);color:#fff}
+  .btn-contorno{background:var(--branco);color:var(--verde);border:1px solid var(--linha)}
+  .btn-sm{padding:9px 16px;font-size:14px}
+  @media(max-width:860px){nav.menu{display:none}}
+  @media(max-width:420px){.topo .btn-zap span{display:none}.topo .btn-zap{padding:10px}}
+
+  .hero{background:linear-gradient(160deg,var(--verde) 0%,var(--verde-esc) 100%);color:#fff;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-120px;bottom:-160px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(200,150,62,.35),transparent 65%)}
+  .hero-in{position:relative;z-index:1;padding:56px 0 64px}
+  .selo{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:6px 14px;border-radius:999px;font-size:13px;margin-bottom:16px}
+  .hero h1{font-family:Fraunces,serif;font-size:clamp(30px,5vw,50px);line-height:1.08;font-weight:700;margin-bottom:14px;max-width:720px}
+  .hero h1 em{font-style:normal;color:var(--ouro)}
+  .hero p{font-size:17px;color:rgba(255,255,255,.82);max-width:560px;margin-bottom:26px}
+
+  /* Caixa de busca do hero */
+  .busca{background:var(--branco);border-radius:20px;padding:10px;display:grid;grid-template-columns:auto 1fr 1fr 1fr auto;gap:8px;max-width:900px;box-shadow:0 20px 50px rgba(0,0,0,.2)}
+  .seg{display:flex;background:var(--verde-claro);border-radius:14px;padding:4px}
+  .seg button{border:0;background:transparent;padding:10px 14px;border-radius:10px;font-weight:600;font-size:14px;color:var(--verde);cursor:pointer}
+  .seg button.ativo{background:var(--verde);color:#fff}
+  .busca select,.busca input{width:100%;border:1px solid var(--linha);border-radius:12px;padding:0 12px;height:46px;font:500 15px Inter,sans-serif;color:var(--texto);background:var(--branco);appearance:none}
+  .busca .btn{height:46px;border-radius:12px}
+  @media(max-width:860px){.busca{grid-template-columns:1fr 1fr}.busca .seg{grid-column:1/-1}.busca .seg button{flex:1}.busca .btn{grid-column:1/-1}}
+
+  .confianca{display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;font-size:14px;color:rgba(255,255,255,.85)}
+  .confianca span{display:flex;align-items:center;gap:8px}
+  .confianca b{color:var(--ouro);font-family:Fraunces,serif;font-size:20px}
+
+  /* Modo captação */
+  .capt-in{position:relative;z-index:1;padding:52px 0 60px;display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+  .capt-lista{display:grid;gap:10px;margin-top:6px}
+  .capt-lista span{display:flex;gap:10px;align-items:center;font-size:16px;color:rgba(255,255,255,.9)}
+  .capt-lista i{flex:0 0 24px;height:24px;border-radius:50%;background:var(--ouro);display:grid;place-items:center;font-style:normal;font-size:13px;color:#fff;font-weight:700}
+  .capt-form{background:var(--branco);color:var(--texto);border-radius:22px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+  .capt-form h3{font-family:Fraunces,serif;font-size:22px;color:var(--verde);margin-bottom:4px}
+  .capt-form p{font-size:14px;color:var(--suave);margin-bottom:14px}
+  .capt-form .linha2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:860px){.capt-in{grid-template-columns:1fr;padding:40px 0 48px}}
+  .vant{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .vant div{background:var(--branco);border:1px solid var(--linha);border-radius:var(--raio);padding:20px}
+  .vant b{display:block;font-size:16px;color:var(--verde);margin:10px 0 4px}
+  .vant span{font-size:14px;color:var(--suave)}
+  .vant .n{width:36px;height:36px;border-radius:10px;background:var(--ouro-claro);color:var(--ouro);display:grid;place-items:center;font-family:Fraunces,serif;font-weight:700;font-size:18px}
+  @media(max-width:860px){.vant{grid-template-columns:1fr 1fr}}
+  @media(max-width:480px){.vant{grid-template-columns:1fr}}
+  .embreve{grid-column:1/-1;background:var(--branco);border:1px solid var(--linha);border-radius:24px;padding:36px 24px;text-align:center}
+  .embreve h3{font-family:Fraunces,serif;font-size:24px;color:var(--verde);margin-bottom:6px}
+  .embreve p{color:var(--suave);max-width:480px;margin:0 auto 18px}
+  .oculto{display:none!important}
+  .video{position:relative;aspect-ratio:16/9;border-radius:var(--raio);overflow:hidden;background:linear-gradient(135deg,var(--verde),var(--verde-esc));display:block}
+  .video iframe{width:100%;height:100%;border:0;display:block}
+  .video-capa{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#fff;font-weight:600;font-size:15px}
+  .video-capa i{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center}
+  .video-wrap{margin-top:22px;max-width:720px}
+
+  /* Assistente */
+  .chat-btn{position:fixed;right:18px;bottom:18px;z-index:40;height:58px;padding:0 20px 0 16px;border-radius:999px;background:var(--verde);color:#fff;border:0;display:flex;align-items:center;gap:10px;font:600 15px Inter,sans-serif;box-shadow:0 10px 28px rgba(20,53,40,.4);cursor:pointer}
+  .chat-btn .pt{position:absolute;top:6px;right:8px;width:12px;height:12px;border-radius:50%;background:#2ecc71;border:2px solid var(--verde)}
+  .chat{position:fixed;right:18px;bottom:88px;z-index:45;width:370px;max-width:calc(100vw - 24px);height:560px;max-height:calc(100vh - 110px);background:var(--fundo);border-radius:22px;box-shadow:0 24px 60px rgba(0,0,0,.25);display:none;flex-direction:column;overflow:hidden}
+  .chat.aberto{display:flex}
+  @media(max-width:520px){.chat{right:12px;left:12px;width:auto;bottom:84px;height:calc(100vh - 110px)}}
+  .chat-topo{background:var(--verde);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px}
+  .chat-topo .av{width:40px;height:40px;border-radius:50%;background:var(--ouro);display:grid;place-items:center;font-family:Fraunces,serif;font-weight:700}
+  .chat-topo b{display:block;font-size:15px}
+  .chat-topo small{font-size:12px;opacity:.8}
+  .chat-topo button{margin-left:auto;background:transparent;border:0;color:#fff;font-size:24px;cursor:pointer}
+  .chat-corpo{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px}
+  .msg{max-width:85%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.45;animation:surge .25s ease}
+  .msg.bot{background:var(--branco);border:1px solid var(--linha);border-bottom-left-radius:4px;align-self:flex-start}
+  .msg.eu{background:var(--verde);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+  .digitando{align-self:flex-start;background:var(--branco);border:1px solid var(--linha);border-radius:16px;padding:12px 14px;display:flex;gap:4px}
+  .digitando span{width:7px;height:7px;border-radius:50%;background:var(--suave);animation:pulo 1s infinite}
+  .digitando span:nth-child(2){animation-delay:.15s}.digitando span:nth-child(3){animation-delay:.3s}
+  @keyframes pulo{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+  @keyframes surge{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .opcoes{display:flex;flex-wrap:wrap;gap:6px;align-self:flex-start;max-width:100%}
+  .opcoes button{border:1px solid var(--verde);background:var(--branco);color:var(--verde);border-radius:999px;padding:8px 13px;font:600 13px Inter,sans-serif;cursor:pointer}
+  .opcoes button:hover{background:var(--verde-claro)}
+  .opcoes .btn-zap{border:0;color:#fff;background:var(--zap);padding:11px 16px}
+  .chat-entrada{display:flex;gap:8px;padding:10px;border-top:1px solid var(--linha);background:var(--branco)}
+  .chat-entrada input{flex:1;border:1px solid var(--linha);border-radius:999px;padding:0 14px;height:42px;font:500 14px Inter,sans-serif}
+  .chat-entrada button{width:42px;height:42px;border-radius:50%;border:0;background:var(--verde);color:#fff;cursor:pointer;font-size:16px}
+  .chat-entrada.off{opacity:.5;pointer-events:none}
+
+  section{padding:60px 0}
+  .titulo-sec{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+  .titulo-sec h2{font-family:Fraunces,serif;font-size:clamp(26px,3.4vw,36px);color:var(--verde);line-height:1.1}
+  .titulo-sec p{color:var(--suave);font-size:15px}
+
+  /* Filtros */
+  .filtros{background:var(--branco);border:1px solid var(--linha);border-radius:var(--raio);padding:14px;display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px}
+  .filtros label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:var(--suave)}
+  .filtros select,.filtros input{border:1px solid var(--linha);border-radius:10px;height:42px;padding:0 10px;font:500 14px Inter,sans-serif;color:var(--texto);background:var(--fundo);width:100%}
+  @media(max-width:960px){.filtros{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:560px){.filtros{grid-template-columns:1fr 1fr}}
+  .barra{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+  .barra .contador{font-size:14px;color:var(--suave)}
+  .barra .acoes{display:flex;gap:8px}
+  .chip{border:1px solid var(--linha);background:var(--branco);padding:8px 14px;border-radius:999px;font:500 13px Inter,sans-serif;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+  .chip.ativo{background:var(--verde);border-color:var(--verde);color:#fff}
+
+  .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}
+  .card{background:var(--branco);border:1px solid var(--linha);border-radius:var(--raio);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;cursor:pointer}
+  .card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(20,53,40,.1)}
+  .foto{aspect-ratio:4/3;position:relative;overflow:hidden;background:var(--verde-claro)}
+  .foto svg,.foto img{width:100%;height:100%;display:block;object-fit:cover}
+  .tag{position:absolute;top:12px;left:12px;background:var(--branco);color:var(--verde);font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+  .tag.aluguel{background:var(--ouro);color:#fff}
+  .tag2{position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:4px 9px;border-radius:999px}
+  .fav{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.95);border:0;display:grid;place-items:center;cursor:pointer}
+  .fav svg{width:19px;height:19px}
+  .fav.on svg{fill:#d64545;stroke:#d64545}
+  .card-corpo{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .preco{font-family:Fraunces,serif;font-size:23px;font-weight:700;color:var(--verde)}
+  .preco small{font-family:Inter,sans-serif;font-size:13px;font-weight:500;color:var(--suave)}
+  .card h3{font-size:15px;font-weight:600;line-height:1.35}
+  .local{font-size:13px;color:var(--suave);display:flex;align-items:center;gap:6px}
+  .carac{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--suave);padding-top:10px;border-top:1px solid var(--linha);margin-top:auto}
+  .carac span{display:flex;align-items:center;gap:5px}
+  .cod{font-size:11px;color:var(--suave);letter-spacing:.05em}
+  .vazio{grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--suave);background:var(--branco);border:1px dashed var(--linha);border-radius:var(--raio)}
+
+  /* Simulador */
+  .sim{background:var(--verde-claro)}
+  .sim-grade{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+  .sim-caixa{background:var(--branco);border-radius:20px;padding:24px;display:grid;gap:14px}
+  .sim-caixa label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--suave)}
+  .sim-caixa input{border:1px solid var(--linha);border-radius:10px;height:46px;padding:0 12px;font:600 16px Inter,sans-serif;color:var(--texto)}
+  .sim-linha{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .sim-res{background:var(--verde);color:#fff;border-radius:20px;padding:26px}
+  .sim-res .big{font-family:Fraunces,serif;font-size:42px;color:var(--ouro);line-height:1.1}
+  .sim-res dl{display:grid;grid-template-columns:1fr auto;gap:8px 12px;margin:18px 0;font-size:14px}
+  .sim-res dt{color:rgba(255,255,255,.75)} .sim-res dd{font-weight:600;text-align:right}
+  .aviso{font-size:12px;color:rgba(255,255,255,.7);margin-bottom:16px}
+  @media(max-width:860px){.sim-grade{grid-template-columns:1fr}}
+
+  .construtora{background:var(--ouro-claro)}
+  .cons-grade{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  .cons-grade h2{font-family:Fraunces,serif;font-size:clamp(26px,3.4vw,36px);color:var(--verde);line-height:1.1;margin-bottom:14px}
+  .cons-grade p{color:var(--suave);margin-bottom:20px}
+  .lista{display:grid;gap:12px}
+  .item{display:flex;gap:14px;background:var(--branco);border-radius:var(--raio);padding:18px;align-items:flex-start}
+  .item-ic{flex:0 0 40px;height:40px;border-radius:10px;background:var(--verde-claro);display:grid;place-items:center}
+  .item b{display:block;font-size:15px;margin-bottom:2px}
+  .item span{font-size:14px;color:var(--suave)}
+  @media(max-width:860px){.cons-grade{grid-template-columns:1fr}}
+
+  .duas{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .caixa{background:var(--branco);border:1px solid var(--linha);border-radius:24px;padding:30px}
+  .caixa h2{font-family:Fraunces,serif;font-size:26px;color:var(--verde);margin-bottom:8px;line-height:1.15}
+  .caixa p{color:var(--suave);margin-bottom:14px}
+  .form{display:grid;gap:10px}
+  .form input,.form select,.form textarea{border:1px solid var(--linha);border-radius:10px;padding:12px;font:500 15px Inter,sans-serif;color:var(--texto);background:var(--fundo);width:100%}
+  .form textarea{min-height:80px;resize:vertical}
+  @media(max-width:860px){.duas{grid-template-columns:1fr}}
+
+  .sobre-box{background:var(--branco);border:1px solid var(--linha);border-radius:24px;padding:32px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+  .avatar{width:110px;height:110px;border-radius:50%;background:var(--verde);display:grid;place-items:center;font-family:Fraunces,serif;font-size:40px;color:var(--ouro)}
+  .sobre-box h2{font-family:Fraunces,serif;font-size:28px;color:var(--verde);margin-bottom:4px}
+  .creci{font-size:13px;color:var(--ouro);font-weight:700;letter-spacing:.04em;margin-bottom:10px}
+  .sobre-box p{color:var(--suave);margin-bottom:10px}
+  .cidades{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .cidades span{background:var(--verde-claro);color:var(--verde);font-size:13px;font-weight:500;padding:6px 12px;border-radius:999px}
+  @media(max-width:640px){.sobre-box{grid-template-columns:1fr;padding:24px}.avatar{width:80px;height:80px;font-size:30px}}
+
+  footer{background:var(--verde-esc);color:rgba(255,255,255,.75);padding:40px 0 100px;font-size:14px}
+  .rod{display:grid;grid-template-columns:2fr 1fr 1fr;gap:28px}
+  footer h4{color:#fff;font-size:14px;margin-bottom:10px}
+  footer a{display:block;margin-bottom:6px}
+  footer a:hover{color:var(--ouro)}
+  .rod-fim{border-top:1px solid rgba(255,255,255,.12);margin-top:28px;padding-top:18px;font-size:12px}
+  @media(max-width:760px){.rod{grid-template-columns:1fr}}
+
+  .zap-flut{position:fixed;right:18px;bottom:18px;z-index:30;width:58px;height:58px;border-radius:50%;background:var(--zap);display:grid;place-items:center;box-shadow:0 8px 24px rgba(31,170,89,.45)}
+
+  /* Página do imóvel (janela) */
+  .modal{position:fixed;inset:0;z-index:50;background:rgba(10,20,15,.6);display:none;align-items:flex-end;justify-content:center}
+  .modal.aberto{display:flex}
+  .modal-in{background:var(--fundo);width:100%;max-width:880px;max-height:94vh;overflow:auto;border-radius:22px 22px 0 0;position:relative}
+  @media(min-width:760px){.modal{align-items:center}.modal-in{border-radius:22px}}
+  .fechar{position:sticky;top:12px;float:right;margin:12px 12px -52px 0;z-index:3;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.95);font-size:22px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+  .galeria{position:relative;aspect-ratio:16/10;background:var(--verde-claro)}
+  .galeria svg,.galeria img{width:100%;height:100%;object-fit:cover;display:block}
+  .gal-btn{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.9);cursor:pointer;font-size:20px}
+  .gal-btn.esq{left:12px}.gal-btn.dir{right:12px}
+  .gal-cont{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:4px 10px;border-radius:999px}
+  .det{padding:22px 22px 28px;display:grid;gap:16px}
+  .det h2{font-family:Fraunces,serif;font-size:26px;color:var(--verde);line-height:1.15}
+  .det-carac{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
+  .det-carac div{background:var(--branco);border:1px solid var(--linha);border-radius:12px;padding:12px;font-size:13px;color:var(--suave)}
+  .det-carac b{display:block;font-size:17px;color:var(--texto)}
+  .det p{color:var(--suave)}
+  .det-acoes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .det-acoes .btn:first-child{grid-column:1/-1}
+  .det-parcela{background:var(--verde-claro);border-radius:14px;padding:14px 16px;font-size:14px;color:var(--verde)}
+  .det-parcela b{font-size:18px}
+  .toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--texto);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none}
+  .toast.on{opacity:1}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap topo">
+    <a href="#" class="marca">
+      <div class="marca-icone"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8963e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
+      <div><div class="marca-nome">Chapadão Imóveis</div><div class="marca-sub">MARCIO VEIGA · CRECI-MS <span class="creci-num"></span></div></div>
+    </a>
+    <nav class="menu">
+      <a href="#imoveis">Imóveis</a><a href="#simulador">Simulador</a><a href="#construtora">Construa</a><a href="#anuncie">Anuncie</a><a href="#sobre">Sobre</a>
+    </nav>
+    <div class="topo-dir">
+      <button class="btn-fav-topo" id="btnFavTopo" aria-label="Favoritos"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1f4d3a" stroke-width="2"><path d="M12 21s-7.5-4.6-9.5-9.3C1 8 3.4 4.5 7 4.5c2 0 3.6 1.1 5 2.8 1.4-1.7 3-2.8 5-2.8 3.6 0 6 3.5 4.5 7.2C19.5 16.4 12 21 12 21z"/></svg><b id="favCont">0</b></button>
+      <a class="btn btn-zap btn-sm zap-link" data-msg="Olá Marcio! Vim pelo site chapadaoimoveis.com.br" href="#" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg><span>WhatsApp</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="hero oculto" id="heroCapt">
+  <div class="wrap capt-in">
+    <div>
+      <span class="selo">Chapadão do Sul · Costa Rica · Paraíso das Águas · Figueirão</span>
+      <h1>Quer vender ou alugar seu imóvel? <em>Avaliação gratuita.</em></h1>
+      <p>Anuncie com um corretor e construtor da região e alcance quem está pronto para comprar, inclusive pelo Minha Casa Minha Vida.</p>
+      <div class="capt-lista">
+        <span><i>✓</i>Página exclusiva do seu imóvel neste site</span>
+        <span><i>✓</i>Divulgação nas 4 cidades da região</span>
+        <span><i>✓</i>Negociação e documentação até a escritura</span>
+      </div>
+      <div class="video-wrap" id="videoApres"></div>
+    </div>
+    <form class="capt-form form" id="formCapt">
+      <h3>Cadastre seu imóvel</h3>
+      <p>Leva 1 minuto. Eu te chamo no WhatsApp para combinar a avaliação.</p>
+      <input id="cNome" placeholder="Seu nome" required>
+      <div class="linha2">
+        <select id="cNeg"><option>Quero vender</option><option>Quero alugar</option></select>
+        <select id="cTipo"><option>Casa</option><option>Terreno</option><option>Apartamento</option><option>Chácara / sítio</option><option>Comercial</option></select>
+      </div>
+      <select id="cCidade"></select>
+      <input id="cDesc" placeholder="Bairro e detalhes (ex.: 3 quartos, Esplanada)">
+      <button class="btn btn-zap" type="submit">Enviar pelo WhatsApp</button>
+    </form>
+  </div>
+</div>
+
+<section id="vantagens" class="oculto">
+  <div class="wrap">
+    <div class="titulo-sec"><div><h2>Por que anunciar comigo</h2><p>Seu imóvel bem apresentado e nas mãos de quem conhece a região.</p></div></div>
+    <div class="vant">
+      <div><span class="n">1</span><b>Avaliação gratuita</b><span>Preço justo de mercado para vender mais rápido, sem compromisso.</span></div>
+      <div><span class="n">2</span><b>Vitrine própria</b><span>Página com fotos, detalhes e simulação de parcela para o comprador.</span></div>
+      <div><span class="n">3</span><b>Comprador com crédito</b><span>Atendo quem financia pelo MCMV e pelos bancos e ajudo com a simulação.</span></div>
+      <div><span class="n">4</span><b>Segurança</b><span>Cuido da negociação e da documentação até a escritura. CRECI-MS <span class="creci-num"></span>.</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="hero" id="inicio">
+  <div class="wrap hero-in">
+    <span class="selo">Chapadão do Sul · Costa Rica · Paraíso das Águas · Figueirão</span>
+    <h1>Seu próximo imóvel está <em>mais perto</em> do que você imagina.</h1>
+    <p>Comprar, alugar, financiar pelo Minha Casa Minha Vida ou construir do zero, com um corretor que conhece cada bairro da região.</p>
+    <form class="busca" id="buscaHero">
+      <div class="seg" id="segNeg"><button type="button" data-v="Venda" class="ativo">Comprar</button><button type="button" data-v="Aluguel">Alugar</button></div>
+      <select id="hCidade" aria-label="Cidade"></select>
+      <select id="hTipo" aria-label="Tipo"></select>
+      <input id="hTexto" placeholder="Bairro ou código" aria-label="Bairro ou código">
+      <button class="btn btn-zap" type="submit">Buscar</button>
+    </form>
+    <div class="confianca">
+      <span><b>4</b> cidades atendidas</span>
+      <span><b>Obra</b> construtora própria</span>
+      <span><b>MCMV</b> simulação gratuita</span>
+    </div>
+  </div>
+</div>
+
+<section id="imoveis">
+  <div class="wrap">
+    <div class="titulo-sec"><div><h2>Imóveis disponíveis</h2><p>Toque em um imóvel para ver fotos, detalhes e simular a parcela.</p></div></div>
+    <div class="filtros">
+      <label>Negócio<select id="fNeg"><option>Todos</option><option>Venda</option><option>Aluguel</option></select></label>
+      <label>Cidade<select id="fCidade"></select></label>
+      <label>Tipo<select id="fTipo"></select></label>
+      <label>Quartos<select id="fQuartos"><option value="0">Qualquer</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option></select></label>
+      <label>Preço até<select id="fPreco"><option value="0">Qualquer</option></select></label>
+      <label>Bairro ou código<input id="fTexto" placeholder="Ex.: Centro ou CS001"></label>
+    </div>
+    <div class="barra">
+      <span class="contador" id="contador"></span>
+      <div class="acoes">
+        <button class="chip" id="chipFav"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-9.5-9.3C1 8 3.4 4.5 7 4.5c2 0 3.6 1.1 5 2.8 1.4-1.7 3-2.8 5-2.8 3.6 0 6 3.5 4.5 7.2C19.5 16.4 12 21 12 21z"/></svg>Favoritos</button>
+        <select class="chip" id="fOrdem" aria-label="Ordenar"><option value="rec">Mais recentes</option><option value="menor">Menor preço</option><option value="maior">Maior preço</option><option value="area">Maior área</option></select>
+      </div>
+    </div>
+    <div class="grade" id="grade"></div>
+  </div>
+</section>
+
+<section class="sim" id="simulador">
+  <div class="wrap">
+    <div class="titulo-sec"><div><h2>Simule seu financiamento</h2><p>Descubra em segundos quanto fica a parcela e a renda que o banco costuma pedir.</p></div></div>
+    <div class="sim-grade">
+      <div class="sim-caixa">
+        <label>Valor do imóvel (R$)<input id="sValor" inputmode="numeric" value="250.000"></label>
+        <div class="sim-linha">
+          <label>Entrada (R$)<input id="sEntrada" inputmode="numeric" value="50.000"></label>
+          <label>Prazo (anos)<input id="sPrazo" inputmode="numeric" value="30"></label>
+        </div>
+        <label>Juros ao ano (%)<input id="sJuros" inputmode="decimal" value="10,5"></label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="chip" data-juros="5">MCMV faixa menor ~5%</button>
+          <button class="chip" data-juros="8">MCMV faixa maior ~8%</button>
+          <button class="chip" data-juros="11,5">Banco tradicional ~11,5%</button>
+        </div>
+      </div>
+      <div class="sim-res">
+        <div style="font-size:14px;color:rgba(255,255,255,.75)">Primeira parcela estimada</div>
+        <div class="big" id="rParcela">R$ 0</div>
+        <dl>
+          <dt>Valor financiado</dt><dd id="rFin">-</dd>
+          <dt>Última parcela (aprox.)</dt><dd id="rUlt">-</dd>
+          <dt>Renda familiar sugerida</dt><dd id="rRenda">-</dd>
+        </dl>
+        <div class="aviso">Estimativa pela tabela SAC (a mais usada pela Caixa), sem seguros e taxas. Os valores reais dependem do banco, do programa e da análise de crédito.</div>
+        <a class="btn btn-zap" id="simZap" href="#" target="_blank" rel="noopener" style="width:100%">Quero uma simulação oficial</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="construtora" id="construtora">
+  <div class="wrap cons-grade">
+    <div>
+      <h2>Não achou o que procura? A gente constrói.</h2>
+      <p>Com a construtora Marcio dos Santos Veiga Ltda, você tem um único responsável do terreno à entrega das chaves, inclusive pelo Minha Casa, Minha Vida.</p>
+      <a class="btn btn-zap zap-link" data-msg="Olá Marcio! Tenho interesse em construir uma casa." href="#" target="_blank" rel="noopener">Quero construir</a>
+    </div>
+    <div class="lista">
+      <div class="item"><div class="item-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f4d3a" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></div><div><b>Projeto sob medida</b><span>Planta pensada para o seu terreno e o seu orçamento.</span></div></div>
+      <div class="item"><div class="item-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f4d3a" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><b>Financiamento facilitado</b><span>Simulação MCMV e acompanhamento com o banco.</span></div></div>
+      <div class="item"><div class="item-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f4d3a" stroke-width="2" stroke-linecap="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg></div><div><b>Obra acompanhada</b><span>Você acompanha cada etapa até a entrega das chaves.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="anuncie">
+  <div class="wrap duas">
+    <div class="caixa">
+      <h2>Não encontrou o imóvel ideal?</h2>
+      <p>Diga o que procura e eu te aviso no WhatsApp assim que aparecer.</p>
+      <form class="form" id="formProcura">
+        <input id="pNome" placeholder="Seu nome" required>
+        <select id="pCidade"></select>
+        <input id="pDesc" placeholder="Ex.: casa 3 quartos até R$ 350 mil">
+        <button class="btn btn-zap" type="submit">Me avise no WhatsApp</button>
+      </form>
+    </div>
+    <div class="caixa">
+      <h2>Quer vender ou alugar seu imóvel?</h2>
+      <p>Avaliação gratuita e divulgação com quem conhece o mercado da região.</p>
+      <form class="form" id="formAnuncie">
+        <input id="aNome" placeholder="Seu nome" required>
+        <select id="aNeg"><option>Quero vender</option><option>Quero alugar</option><option>Quero uma avaliação</option></select>
+        <textarea id="aDesc" placeholder="Endereço e uma descrição rápida do imóvel"></textarea>
+        <button class="btn btn-verde" type="submit">Enviar pelo WhatsApp</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="sobre" style="padding-top:0">
+  <div class="wrap">
+    <div class="sobre-box">
+      <div class="avatar">MV</div>
+      <div>
+        <h2>Marcio dos Santos Veiga</h2>
+        <div class="creci">CORRETOR DE IMÓVEIS · CRECI-MS <span class="creci-num"></span></div>
+        <p>Corretor e construtor, acompanho você do primeiro contato até a entrega das chaves, seja para comprar, vender, alugar, financiar ou construir.</p>
+        <div class="cidades"><span>Chapadão do Sul</span><span>Costa Rica</span><span>Paraíso das Águas</span><span>Figueirão</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="rod">
+      <div>
+        <h4>Chapadão Imóveis</h4>
+        Marcio dos Santos Veiga · Corretor de Imóveis CRECI-MS <span class="creci-num"></span><br>
+        Marcio dos Santos Veiga Ltda · Construtora<br>
+        WhatsApp: (67) 99693-6202
+      </div>
+      <div>
+        <h4>Imóveis</h4>
+        <a href="#imoveis" data-ir="Venda">Comprar</a>
+        <a href="#imoveis" data-ir="Aluguel">Alugar</a>
+        <a href="#simulador">Simulador</a>
+      </div>
+      <div>
+        <h4>Atendimento</h4>
+        <a href="#anuncie">Anunciar meu imóvel</a>
+        <a href="#construtora">Construir</a>
+        <a class="zap-link" data-msg="Olá Marcio! Vim pelo site." href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
+      </div>
+    </div>
+    <div class="rod-fim">© <span id="ano"></span> Chapadão Imóveis · Chapadão do Sul, MS · Os preços e a disponibilidade podem mudar sem aviso.</div>
+  </div>
+</footer>
+
+
+<button class="chat-btn" id="chatBtn" aria-label="Abrir atendimento"><span class="pt"></span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span id="chatBtnTxt">Atendimento</span></button>
+<div class="chat" id="chat" role="dialog" aria-label="Atendimento">
+  <div class="chat-topo"><div class="av">MV</div><div><b>Atendimento Marcio Veiga</b><small>Responde em minutos no WhatsApp</small></div><button id="chatFechar" aria-label="Fechar">×</button></div>
+  <div class="chat-corpo" id="chatCorpo"></div>
+  <form class="chat-entrada off" id="chatEntrada"><input id="chatInput" placeholder="Digite aqui…" autocomplete="off"><button type="submit" aria-label="Enviar">➤</button></form>
+</div>
+
+<div class="modal" id="modal"><div class="modal-in" id="modalIn"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO — troque aqui
+   ============================================================ */
+const WHATSAPP = "5567996936202";
+const CRECI = "14735";
+const MODO_CAPTACAO = true;  // true = site focado em captar imóveis; false = vitrine em destaque
+const VIDEO_VSL = "";  // link do YouTube da VSL (vídeo de vendas) que aparece no topo; "" esconde
+/* Em cada imóvel dá para colocar  video:"link do YouTube"  */
+const CIDADES = ["Chapadão do Sul","Costa Rica","Paraíso das Águas","Figueirão"];
+
+/* ============================================================
+   IMÓVEIS — para adicionar, copie um bloco { ... }
+   fotos: lista de fotos, ex.: ["fotos/cs001-1.jpg","fotos/cs001-2.jpg"]
+   deixe [] para usar a ilustração.
+   ============================================================ */
+const IMOVEIS = [
+  { cod:"CS001", exemplo:true, titulo:"Casa 3 quartos com suíte e área gourmet", cidade:"Chapadão do Sul", bairro:"Jardim Paraíso", negocio:"Venda", tipo:"Casa", preco:420000, quartos:3, suites:1, banheiros:2, vagas:2, area:180, terreno:360, financia:true, fotos:[], cor:1,
+    descricao:"Casa ampla com sala integrada, cozinha planejada, área gourmet com churrasqueira e quintal gramado. Rua asfaltada, perto de escola e mercado." },
+  { cod:"CS002", exemplo:true, titulo:"Terreno de esquina pronto para construir", cidade:"Chapadão do Sul", bairro:"Parque União", negocio:"Venda", tipo:"Terreno", preco:115000, area:360, terreno:360, financia:true, fotos:[], cor:2,
+    descricao:"Terreno plano de esquina, com água e energia na rua. Ideal para construir pelo Minha Casa Minha Vida com a nossa construtora." },
+  { cod:"CR001", exemplo:true, titulo:"Casa 2 quartos, ideal para Minha Casa Minha Vida", cidade:"Costa Rica", bairro:"Centro", negocio:"Venda", tipo:"Casa", preco:235000, quartos:2, banheiros:1, vagas:1, area:62, terreno:250, financia:true, fotos:[], cor:3,
+    descricao:"Casa nova, pronta para morar, dentro das regras do MCMV. Aceita FGTS na entrada." },
+  { cod:"CS003", exemplo:true, titulo:"Apartamento 2 quartos mobiliado", cidade:"Chapadão do Sul", bairro:"Centro", negocio:"Aluguel", tipo:"Apartamento", preco:1800, quartos:2, banheiros:1, vagas:1, area:68, fotos:[], cor:4,
+    descricao:"Apartamento mobiliado no centro, com ar-condicionado nos quartos e vaga coberta. Condomínio incluso." },
+  { cod:"PA001", exemplo:true, titulo:"Casa ampla com quintal grande", cidade:"Paraíso das Águas", bairro:"Vila Nova", negocio:"Venda", tipo:"Casa", preco:298000, quartos:3, banheiros:2, vagas:2, area:140, terreno:450, financia:true, fotos:[], cor:5,
+    descricao:"Casa de 3 quartos em terreno grande, com espaço para piscina ou horta. Documentação em dia." },
+  { cod:"FG001", exemplo:true, titulo:"Casa 2 quartos perto do comércio", cidade:"Figueirão", bairro:"Centro", negocio:"Aluguel", tipo:"Casa", preco:1100, quartos:2, banheiros:1, vagas:1, area:70, fotos:[], cor:6,
+    descricao:"Casa simples e bem conservada, a duas quadras do comércio. Aceita pet." },
+];
+
+/* ============================================================
+   Funcionamento do site
+   ============================================================ */
+const $ = id => document.getElementById(id);
+const zap = msg => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
+const num = s => Number(String(s).replace(/\./g,"").replace(",",".").replace(/[^\d.]/g,"")) || 0;
+const site = "chapadaoimoveis.com.br";
+
+document.querySelectorAll(".zap-link").forEach(a => a.href = zap(a.dataset.msg));
+document.querySelectorAll(".creci-num").forEach(s => s.textContent = CRECI);
+$("ano").textContent = new Date().getFullYear();
+
+function toast(t){ const el=$("toast"); el.textContent=t; el.classList.add("on"); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove("on"),1800); }
+
+/* Favoritos: ficam salvos no aparelho de quem visita */
+let favs = [];
+try { favs = JSON.parse(localStorage.getItem("ci_favs")||"[]"); } catch(e){}
+function salvarFavs(){ try{ localStorage.setItem("ci_favs",JSON.stringify(favs)); }catch(e){} atualizarFavCont(); }
+function atualizarFavCont(){ const b=$("favCont"); b.textContent=favs.length; b.classList.toggle("on",favs.length>0); }
+function alternarFav(cod){ const i=favs.indexOf(cod); if(i>=0){favs.splice(i,1);toast("Removido dos favoritos")} else {favs.push(cod);toast("Salvo nos favoritos")} salvarFavs(); render(); }
+atualizarFavCont();
+
+/* Ilustração enquanto não há foto */
+const PALETAS=[["#dfe9e2","#1f4d3a","#c8963e"],["#f3e7d2","#8a6a2e","#1f4d3a"],["#e4ece7","#2f6b52","#d4a24c"],["#ece6db","#3d4f46","#c8963e"],["#e6efe9","#1f4d3a","#b9853a"],["#f1e9dc","#5a4a2b","#2f6b52"]];
+function ilustracao(im){
+  const [bg,a,b]=PALETAS[((im.cor||1)-1)%PALETAS.length];
+  if(im.tipo==="Terreno") return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="${bg}"/><circle cx="320" cy="70" r="30" fill="${b}" opacity=".5"/><path d="M0 210 Q200 180 400 205 V300 H0Z" fill="${a}" opacity=".25"/><path d="M60 250 L200 200 L340 240 L200 290Z" fill="none" stroke="${a}" stroke-width="3" stroke-dasharray="10 8"/><rect x="196" y="160" width="4" height="50" fill="${a}"/><path d="M200 160 h34 l-8 10 8 10 h-34z" fill="${b}"/></svg>`;
+  if(im.tipo==="Apartamento") return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="${bg}"/><circle cx="80" cy="70" r="28" fill="${b}" opacity=".5"/><rect x="130" y="60" width="140" height="210" rx="6" fill="${a}"/>${[0,1,2,3,4].map(r=>[0,1,2].map(c=>`<rect x="${148+c*42}" y="${78+r*36}" width="26" height="22" rx="3" fill="${bg}" opacity=".9"/>`).join("")).join("")}<rect x="0" y="268" width="400" height="32" fill="${a}" opacity=".25"/></svg>`;
+  return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="${bg}"/><circle cx="320" cy="70" r="30" fill="${b}" opacity=".55"/><path d="M0 250 Q200 225 400 250 V300 H0Z" fill="${a}" opacity=".22"/><path d="M110 150 L200 85 L290 150Z" fill="${b}"/><rect x="125" y="148" width="150" height="102" fill="${a}"/><rect x="185" y="190" width="30" height="60" rx="3" fill="${bg}"/><rect x="142" y="170" width="28" height="24" rx="3" fill="${bg}"/><rect x="230" y="170" width="28" height="24" rx="3" fill="${bg}"/><circle cx="70" cy="215" r="26" fill="${a}" opacity=".5"/><rect x="67" y="225" width="6" height="28" fill="${a}" opacity=".6"/></svg>`;
+}
+const fotoHTML=(im,i=0)=> im.fotos&&im.fotos.length ? `<img src="${im.fotos[i]}" alt="${im.titulo}" loading="lazy">` : ilustracao(im);
+
+const ic={
+  quarto:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M7 10V7h10v3"/></svg>',
+  banho:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4zM6 12V6a2 2 0 0 1 4 0"/></svg>',
+  vaga:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 16V11l2-5h10l2 5v5M5 16h14M7 19v-3M17 19v-3"/></svg>',
+  area:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9h3M4 14h3M9 4v3M14 4v3"/></svg>',
+  pin:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+  cor:'<svg viewBox="0 0 24 24" fill="none" stroke="#1d2420" stroke-width="2"><path d="M12 21s-7.5-4.6-9.5-9.3C1 8 3.4 4.5 7 4.5c2 0 3.6 1.1 5 2.8 1.4-1.7 3-2.8 5-2.8 3.6 0 6 3.5 4.5 7.2C19.5 16.4 12 21 12 21z"/></svg>'
+};
+
+/* Preenche as listas */
+const tipos=["Todos",...new Set(IMOVEIS.map(i=>i.tipo))];
+const opts=(arr)=>arr.map(o=>`<option>${o}</option>`).join("");
+$("fCidade").innerHTML=opts(["Todas",...CIDADES]);
+$("hCidade").innerHTML=`<option value="Todas">Todas as cidades</option>`+opts(CIDADES);
+$("fTipo").innerHTML=opts(tipos);
+$("hTipo").innerHTML=`<option value="Todos">Todos os tipos</option>`+opts(tipos.slice(1));
+$("pCidade").innerHTML=opts(CIDADES);
+const faixasVenda=[150000,250000,350000,500000,800000], faixasAluguel=[800,1200,1800,2500,4000];
+function preencherPreco(){
+  const neg=$("fNeg").value, atual=$("fPreco").value;
+  const f = neg==="Aluguel"?faixasAluguel : neg==="Venda"?faixasVenda : [...faixasAluguel,...faixasVenda];
+  $("fPreco").innerHTML=`<option value="0">Qualquer</option>`+f.map(v=>`<option value="${v}">${brl(v)}</option>`).join("");
+  if([...$("fPreco").options].some(o=>o.value===atual)) $("fPreco").value=atual;
+}
+preencherPreco();
+
+let soFavs=false;
+function render(){
+  const neg=$("fNeg").value, cid=$("fCidade").value, tipo=$("fTipo").value,
+        q=+$("fQuartos").value, pmax=+$("fPreco").value, txt=$("fTexto").value.trim().toLowerCase(), ord=$("fOrdem").value;
+  const base = MODO_CAPTACAO ? IMOVEIS.filter(i=>!i.exemplo) : IMOVEIS;
+  const semImoveis = base.length===0;
+  document.querySelector(".filtros").classList.toggle("oculto",semImoveis);
+  document.querySelector(".barra").classList.toggle("oculto",semImoveis);
+  if(semImoveis){
+    $("grade").innerHTML=`<div class="embreve"><h3>Novos imóveis em breve</h3><p>Estou cadastrando os imóveis da região. Diga o que você procura e eu te aviso no WhatsApp assim que aparecer.</p><a class="btn btn-zap" href="#anuncie">Quero ser avisado</a></div>`;
+    return;
+  }
+  let lista=base.filter(i=>
+    (neg==="Todos"||i.negocio===neg)&&(cid==="Todas"||i.cidade===cid)&&(tipo==="Todos"||i.tipo===tipo)&&
+    (!q||(i.quartos||0)>=q)&&(!pmax||i.preco<=pmax)&&
+    (!txt||i.bairro.toLowerCase().includes(txt)||i.cod.toLowerCase()===txt||i.titulo.toLowerCase().includes(txt))&&
+    (!soFavs||favs.includes(i.cod)));
+  if(ord==="menor") lista.sort((a,b)=>a.preco-b.preco);
+  if(ord==="maior") lista.sort((a,b)=>b.preco-a.preco);
+  if(ord==="area") lista.sort((a,b)=>(b.area||0)-(a.area||0));
+  $("contador").textContent=`${lista.length} ${lista.length===1?"imóvel encontrado":"imóveis encontrados"}`;
+  $("chipFav").classList.toggle("ativo",soFavs);
+  if(!lista.length){
+    $("grade").innerHTML=soFavs
+      ? `<div class="vazio">Você ainda não salvou nenhum favorito. Toque no coração de um imóvel para guardar.</div>`
+      : `<div class="vazio">Nenhum imóvel com esses filtros agora.<br><a class="btn btn-zap btn-sm" style="margin-top:14px" href="#anuncie">Me avise quando aparecer</a></div>`;
+    return;
+  }
+  $("grade").innerHTML=lista.map(im=>{
+    const c=[];
+    if(im.quartos) c.push(`<span>${ic.quarto}${im.quartos} qto${im.quartos>1?"s":""}</span>`);
+    if(im.banheiros) c.push(`<span>${ic.banho}${im.banheiros} banh.</span>`);
+    if(im.vagas) c.push(`<span>${ic.vaga}${im.vagas} vaga${im.vagas>1?"s":""}</span>`);
+    if(im.area) c.push(`<span>${ic.area}${im.area} m²</span>`);
+    return `<article class="card" data-cod="${im.cod}">
+      <div class="foto">${fotoHTML(im)}
+        <span class="tag ${im.negocio==="Aluguel"?"aluguel":""}">${im.negocio}</span>
+        <button class="fav ${favs.includes(im.cod)?"on":""}" data-fav="${im.cod}" aria-label="Favoritar">${ic.cor}</button>
+        ${im.exemplo?'<span class="tag2">Exemplo</span>':im.video?'<span class="tag2">▶ Vídeo</span>':im.fotos.length>1?`<span class="tag2">${im.fotos.length} fotos</span>`:""}
+      </div>
+      <div class="card-corpo">
+        <div class="preco">${brl(im.preco)}${im.negocio==="Aluguel"?" <small>/mês</small>":""}</div>
+        <h3>${im.titulo}</h3>
+        <div class="local">${ic.pin}${im.bairro} · ${im.cidade}</div>
+        <div class="carac">${c.join("")}</div>
+        <div class="cod">CÓD. ${im.cod}</div>
+      </div></article>`;
+  }).join("");
+}
+
+$("grade").addEventListener("click",e=>{
+  const f=e.target.closest("[data-fav]"); if(f){e.stopPropagation(); alternarFav(f.dataset.fav); return;}
+  const c=e.target.closest(".card"); if(c) location.hash="imovel-"+c.dataset.cod.toLowerCase();
+});
+["fNeg","fCidade","fTipo","fQuartos","fPreco","fOrdem"].forEach(id=>$(id).addEventListener("change",()=>{ if(id==="fNeg")preencherPreco(); render(); }));
+$("fTexto").addEventListener("input",render);
+$("chipFav").onclick=()=>{soFavs=!soFavs;render();};
+$("btnFavTopo").onclick=()=>{soFavs=true;render();$("imoveis").scrollIntoView();};
+
+/* Busca do topo */
+let negHero="Venda";
+$("segNeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{negHero=b.dataset.v;$("segNeg").querySelectorAll("button").forEach(x=>x.classList.toggle("ativo",x===b));});
+$("buscaHero").onsubmit=e=>{
+  e.preventDefault();
+  $("fNeg").value=negHero; preencherPreco();
+  $("fCidade").value=$("hCidade").value; $("fTipo").value=$("hTipo").value; $("fTexto").value=$("hTexto").value;
+  soFavs=false; render(); $("imoveis").scrollIntoView();
+};
+document.querySelectorAll("[data-ir]").forEach(a=>a.addEventListener("click",()=>{$("fNeg").value=a.dataset.ir;preencherPreco();render();}));
+
+/* Cálculo SAC (amortização constante) */
+function sac(valor,entrada,anos,jurosAno){
+  const fin=Math.max(valor-entrada,0), n=Math.max(Math.round(anos*12),1);
+  const i=Math.pow(1+jurosAno/100,1/12)-1, amort=fin/n;
+  const primeira=amort+fin*i, ultima=amort+amort*i;
+  return {fin,primeira,ultima,renda:primeira/0.3};
+}
+
+/* Página do imóvel */
+let galIdx=0, imAberto=null;
+function abrir(cod){
+  const im=IMOVEIS.find(i=>i.cod.toLowerCase()===cod); if(!im){fechar();return;}
+  imAberto=im; galIdx=0;
+  const n=(im.fotos&&im.fotos.length)||1;
+  const det=[];
+  if(im.quartos) det.push(["Quartos",im.quartos]);
+  if(im.suites) det.push(["Suítes",im.suites]);
+  if(im.banheiros) det.push(["Banheiros",im.banheiros]);
+  if(im.vagas) det.push(["Vagas",im.vagas]);
+  if(im.area) det.push([im.tipo==="Terreno"?"Área":"Construída",im.area+" m²"]);
+  if(im.terreno&&im.tipo!=="Terreno") det.push(["Terreno",im.terreno+" m²"]);
+  const msg=`Olá Marcio! Tenho interesse no imóvel ${im.cod}: ${im.titulo} (${im.bairro}, ${im.cidade}) - ${brl(im.preco)}${im.negocio==="Aluguel"?"/mês":""}`;
+  const msgVisita=`Olá Marcio! Gostaria de agendar uma visita ao imóvel ${im.cod} (${im.titulo}). Qual o melhor dia?`;
+  let parcela="";
+  if(im.negocio==="Venda"&&im.financia){
+    const s=sac(im.preco,im.preco*0.2,30,10.5);
+    parcela=`<div class="det-parcela">Financiando 80% em 30 anos, a primeira parcela fica em torno de <b>${brl(s.primeira)}</b>. <a href="#simulador" data-sim="${im.preco}" style="text-decoration:underline">Simular com meus valores</a></div>`;
+  }
+  $("modalIn").innerHTML=`
+    <button class="fechar" aria-label="Fechar" onclick="fechar()">×</button>
+    <div class="galeria" id="gal">${fotoHTML(im,0)}
+      ${n>1?`<button class="gal-btn esq" onclick="gal(-1)">‹</button><button class="gal-btn dir" onclick="gal(1)">›</button><span class="gal-cont" id="galCont">1 / ${n}</span>`:""}
+      ${im.exemplo?'<span class="tag2" style="left:12px;bottom:12px">Imóvel de exemplo</span>':""}
+    </div>
+    <div class="det">
+      <div>
+        <div class="cod">CÓD. ${im.cod} · ${im.tipo} para ${im.negocio.toLowerCase()}</div>
+        <h2>${im.titulo}</h2>
+        <div class="local" style="margin-top:6px">${ic.pin}${im.bairro} · ${im.cidade} - MS</div>
+      </div>
+      <div class="preco" style="font-size:30px">${brl(im.preco)}${im.negocio==="Aluguel"?" <small>/mês</small>":""}</div>
+      ${det.length?`<div class="det-carac">${det.map(d=>`<div><b>${d[1]}</b>${d[0]}</div>`).join("")}</div>`:""}
+      <p>${im.descricao||""}</p>
+      ${im.video?videoHTML(im.video,"Ver vídeo do imóvel"):""}
+      ${parcela}
+      <div class="det-acoes">
+        <a class="btn btn-zap" href="${zap(msg)}" target="_blank" rel="noopener">Tenho interesse</a>
+        <a class="btn btn-contorno" href="${zap(msgVisita)}" target="_blank" rel="noopener">Agendar visita</a>
+        <button class="btn btn-contorno" onclick="compartilhar()">Compartilhar</button>
+      </div>
+      <button class="btn btn-contorno" onclick="alternarFav('${im.cod}');abrir('${im.cod.toLowerCase()}')">${favs.includes(im.cod)?"♥ Salvo nos favoritos":"♡ Salvar nos favoritos"}</button>
+    </div>`;
+  $("modalIn").querySelector("[data-sim]")?.addEventListener("click",ev=>{
+    const v=+ev.target.dataset.sim; $("sValor").value=v.toLocaleString("pt-BR"); $("sEntrada").value=Math.round(v*0.2).toLocaleString("pt-BR"); simular();
+    ev.preventDefault(); history.replaceState(null,"",location.pathname); $("modal").classList.remove("aberto"); document.body.classList.remove("travado"); $("simulador").scrollIntoView();
+  });
+  $("modal").classList.add("aberto"); document.body.classList.add("travado"); $("modalIn").scrollTop=0;
+}
+function gal(d){
+  const im=imAberto, n=im.fotos.length; galIdx=(galIdx+d+n)%n;
+  $("gal").querySelector("img").src=im.fotos[galIdx]; $("galCont").textContent=`${galIdx+1} / ${n}`;
+}
+function fechar(){ $("modal").classList.remove("aberto"); document.body.classList.remove("travado"); if(location.hash.startsWith("#imovel-")) history.replaceState(null,"",location.pathname+"#imoveis"); }
+function compartilhar(){
+  const im=imAberto, link=`https://${site}/#imovel-${im.cod.toLowerCase()}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(`Olha esse imóvel: ${im.titulo} - ${brl(im.preco)}\n${link}`)}`,"_blank");
+}
+$("modal").addEventListener("click",e=>{ if(e.target.id==="modal") fechar(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") fechar(); });
+function rota(){ const h=location.hash.slice(1); if(h.startsWith("imovel-")) abrir(h.slice(7)); else if($("modal").classList.contains("aberto")) { $("modal").classList.remove("aberto"); document.body.classList.remove("travado"); } }
+window.addEventListener("hashchange",rota);
+
+/* Simulador */
+function simular(){
+  const v=num($("sValor").value), e=num($("sEntrada").value), a=num($("sPrazo").value)||30, j=num($("sJuros").value);
+  const r=sac(v,e,Math.min(a,35),j);
+  $("rParcela").textContent=brl(r.primeira); $("rFin").textContent=brl(r.fin); $("rUlt").textContent=brl(r.ultima); $("rRenda").textContent=brl(r.renda);
+  $("simZap").href=zap(`Olá Marcio! Fiz a simulação no site: imóvel de ${brl(v)}, entrada de ${brl(e)}, ${a} anos. Parcela estimada de ${brl(r.primeira)}. Pode fazer uma simulação oficial para mim?`);
+}
+["sValor","sEntrada","sPrazo","sJuros"].forEach(id=>$(id).addEventListener("input",simular));
+document.querySelectorAll("[data-juros]").forEach(b=>b.onclick=()=>{$("sJuros").value=b.dataset.juros;simular();});
+simular();
+
+/* Formulários que viram mensagem no WhatsApp */
+$("formProcura").onsubmit=e=>{e.preventDefault();window.open(zap(`Olá Marcio! Sou ${$("pNome").value}. Procuro imóvel em ${$("pCidade").value}: ${$("pDesc").value}. Me avise quando aparecer!`),"_blank");};
+$("formAnuncie").onsubmit=e=>{e.preventDefault();window.open(zap(`Olá Marcio! Sou ${$("aNome").value}. ${$("aNeg").value}: ${$("aDesc").value}`),"_blank");};
+
+/* Vídeos (YouTube) */
+const noDominio = location.hostname.endsWith(site);
+function ytId(u){ const m=String(u).match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/); return m?m[1]:""; }
+const PLAY='<i><svg width="26" height="26" viewBox="0 0 24 24" fill="#1f4d3a"><path d="M8 5v14l11-7z"/></svg></i>';
+function videoHTML(url,legenda){
+  const id=ytId(url);
+  if(id && noDominio) return `<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="${legenda}" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`;
+  return `<a class="video" href="${url}" target="_blank" rel="noopener"><span class="video-capa">${PLAY}${legenda}</span></a>`;
+}
+if(VIDEO_VSL) $("videoApres").innerHTML=videoHTML(VIDEO_VSL,"Assista: como vendo o seu imóvel");
+else if(!noDominio) $("videoApres").innerHTML=`<div class="video"><span class="video-capa">${PLAY}Espaço da sua VSL<small style="font-weight:400;opacity:.8">aparece aqui quando você me mandar o link do vídeo</small></span></div>`;
+
+/* Modo captação */
+$("cCidade").innerHTML=opts(CIDADES);
+$("formCapt").onsubmit=e=>{e.preventDefault();window.open(zap(`Olá Marcio! Sou ${$("cNome").value}. ${$("cNeg").value} um(a) ${$("cTipo").value.toLowerCase()} em ${$("cCidade").value}. ${$("cDesc").value}`),"_blank");};
+if(MODO_CAPTACAO){
+  $("heroCapt").classList.remove("oculto");
+  $("vantagens").classList.remove("oculto");
+  $("inicio").classList.add("oculto");
+  $("formAnuncie").closest(".caixa").classList.add("oculto");
+  document.querySelector("#anuncie .duas").style.gridTemplateColumns="1fr";
+}
+
+/* ============================================================
+   ASSISTENTE DE ATENDIMENTO (conversa guiada → WhatsApp)
+   ============================================================ */
+const TIPOS_IMOVEL=["Casa","Terreno","Apartamento","Chácara / sítio","Comercial"];
+const FLUXOS={
+  vender:{titulo:"Quero vender meu imóvel", passos:[
+    {id:"tipo",perg:"Ótimo! Que tipo de imóvel você quer vender?",op:TIPOS_IMOVEL},
+    {id:"cidade",perg:"Em qual cidade ele fica?",op:CIDADES},
+    {id:"det",perg:"Me conta o bairro e alguns detalhes (quartos, tamanho, se está quitado…).",texto:true,pular:true},
+    {id:"nome",perg:"Perfeito! E qual é o seu nome?",texto:true}],
+    fim:"A avaliação é gratuita e sem compromisso. Toque abaixo para enviar ao Marcio, que ele combina a visita com você."},
+  alugarMeu:{titulo:"Quero alugar meu imóvel", passos:[
+    {id:"tipo",perg:"Que tipo de imóvel você quer colocar para alugar?",op:TIPOS_IMOVEL},
+    {id:"cidade",perg:"Em qual cidade ele fica?",op:CIDADES},
+    {id:"det",perg:"Me conta o bairro e alguns detalhes do imóvel.",texto:true,pular:true},
+    {id:"nome",perg:"E qual é o seu nome?",texto:true}],
+    fim:"Toque abaixo para enviar ao Marcio. Ele te explica como funciona e combina a avaliação."},
+  comprar:{titulo:"Quero comprar", passos:[
+    {id:"tipo",perg:"Legal! Que tipo de imóvel você procura?",op:TIPOS_IMOVEL},
+    {id:"cidade",perg:"Em qual cidade?",op:CIDADES},
+    {id:"faixa",perg:"Até quanto pretende investir?",op:["Até R$ 200 mil","R$ 200 a 350 mil","R$ 350 a 600 mil","Acima de R$ 600 mil","Ainda não sei"]},
+    {id:"pag",perg:"Como pretende pagar?",op:["Financiamento / MCMV","À vista","Ainda não sei"]},
+    {id:"nome",perg:"E qual é o seu nome?",texto:true}],
+    fim:"Assim que o Marcio receber, ele te mostra as opções que combinam com você, inclusive as que ainda não estão no site."},
+  alugar:{titulo:"Quero alugar um imóvel", passos:[
+    {id:"tipo",perg:"Que tipo de imóvel você procura para alugar?",op:TIPOS_IMOVEL},
+    {id:"cidade",perg:"Em qual cidade?",op:CIDADES},
+    {id:"faixa",perg:"Até quanto pode pagar de aluguel?",op:["Até R$ 1.000","R$ 1.000 a 1.800","R$ 1.800 a 3.000","Acima de R$ 3.000"]},
+    {id:"nome",perg:"E qual é o seu nome?",texto:true}],
+    fim:"Toque abaixo para enviar ao Marcio, que ele te avisa das opções disponíveis."},
+  construir:{titulo:"Quero construir", passos:[
+    {id:"terreno",perg:"Que bom! Você já tem terreno?",op:["Sim, já tenho","Ainda não"]},
+    {id:"cidade",perg:"Em qual cidade quer construir?",op:CIDADES},
+    {id:"pag",perg:"Pretende financiar a obra?",op:["Sim, pelo MCMV","Sim, por outro banco","Não, recurso próprio","Ainda não sei"]},
+    {id:"nome",perg:"E qual é o seu nome?",texto:true}],
+    fim:"A construtora cuida do projeto à entrega das chaves. Toque abaixo para falar com o Marcio."},
+  financiar:{titulo:"Quero simular financiamento", passos:[
+    {id:"renda",perg:"Qual é a renda bruta da família, mais ou menos?",op:["Até R$ 3 mil","R$ 3 a 5 mil","R$ 5 a 9 mil","Acima de R$ 9 mil"]},
+    {id:"fgts",perg:"Alguém da família tem FGTS?",op:["Sim","Não","Não sei"]},
+    {id:"cidade",perg:"Em qual cidade quer o imóvel?",op:CIDADES},
+    {id:"nome",perg:"E qual é o seu nome?",texto:true}],
+    fim:"Com isso o Marcio já consegue ver em qual faixa do Minha Casa Minha Vida você se encaixa. Toque abaixo para enviar."}
+};
+const ROTULOS={tipo:"Tipo",cidade:"Cidade",det:"Detalhes",faixa:"Faixa de valor",pag:"Pagamento",terreno:"Terreno",renda:"Renda familiar",fgts:"FGTS",nome:"Nome"};
+
+let fluxo=null, passo=0, resp={}, iniciado=false;
+const corpo=$("chatCorpo");
+const rolar=()=>corpo.scrollTop=corpo.scrollHeight;
+function addMsg(txt,quem="bot"){ const d=document.createElement("div"); d.className="msg "+quem; d.textContent=txt; corpo.appendChild(d); rolar(); }
+function botDiz(txt,depois){
+  const t=document.createElement("div"); t.className="digitando"; t.innerHTML="<span></span><span></span><span></span>"; corpo.appendChild(t); rolar();
+  setTimeout(()=>{ t.remove(); addMsg(txt); depois&&depois(); }, Math.min(400+txt.length*12,1300));
+}
+function addOpcoes(lista){
+  const box=document.createElement("div"); box.className="opcoes";
+  lista.forEach(([rot,fn,cls])=>{ const b=document.createElement("button"); b.type="button"; b.textContent=rot; if(cls)b.className=cls;
+    b.onclick=()=>{ box.remove(); fn(rot); }; box.appendChild(b); });
+  corpo.appendChild(box); rolar(); return box;
+}
+function entrada(on,ph){ $("chatEntrada").classList.toggle("off",!on); $("chatInput").placeholder=ph||"Digite aqui…"; if(on) setTimeout(()=>$("chatInput").focus(),50); }
+
+function menu(){
+  fluxo=null; passo=0; resp={}; entrada(false);
+  botDiz("Olá! 👋 Sou o assistente do Marcio Veiga, corretor e construtor em Chapadão do Sul e região. Como posso te ajudar?",()=>{
+    addOpcoes([
+      ["Quero vender meu imóvel",()=>iniciar("vender")],
+      ["Quero alugar meu imóvel",()=>iniciar("alugarMeu")],
+      ["Quero comprar",()=>iniciar("comprar")],
+      ["Quero alugar um imóvel",()=>iniciar("alugar")],
+      ["Quero construir",()=>iniciar("construir")],
+      ["Simular financiamento",()=>iniciar("financiar")],
+      ["Falar direto com o Marcio",()=>{ addMsg("Falar direto com o Marcio","eu"); window.open(zap("Olá Marcio! Vim pelo site chapadaoimoveis.com.br"),"_blank"); botDiz("Abri o WhatsApp do Marcio para você. Se preferir, posso continuar te ajudando por aqui.",()=>addOpcoes([["Voltar ao início",menu]])); }]
+    ]);
+  });
+}
+function iniciar(chave){ fluxo=FLUXOS[chave]; passo=0; resp={}; addMsg(fluxo.titulo,"eu"); perguntar(); }
+function perguntar(){
+  const p=fluxo.passos[passo];
+  if(!p){ finalizar(); return; }
+  botDiz(p.perg,()=>{
+    if(p.op){ entrada(false); addOpcoes(p.op.map(o=>[o,v=>responder(v)])); }
+    else { entrada(true, p.id==="nome"?"Seu nome":"Escreva aqui…"); if(p.pular) addOpcoes([["Pular",()=>responder("")]]); }
+  });
+}
+function responder(v){
+  const p=fluxo.passos[passo]; resp[p.id]=v; addMsg(v||"(pulei)","eu");
+  corpo.querySelectorAll(".opcoes").forEach(o=>o.remove());
+  entrada(false); passo++; perguntar();
+}
+function finalizar(){
+  const nome=(resp.nome||"").split(" ")[0];
+  const linhas=fluxo.passos.filter(p=>p.id!=="nome"&&resp[p.id]).map(p=>`• ${ROTULOS[p.id]}: ${resp[p.id]}`);
+  const texto=`Olá Marcio! Sou ${resp.nome}. Vim pelo site chapadaoimoveis.com.br.\n*${fluxo.titulo}*\n${linhas.join("\n")}`;
+  botDiz(`Obrigado${nome?", "+nome:""}! ${fluxo.fim}`,()=>{
+    addOpcoes([
+      ["Enviar para o Marcio no WhatsApp",()=>{ window.open(zap(texto),"_blank"); addMsg("Enviar para o Marcio no WhatsApp","eu"); botDiz("Pronto! É só tocar em enviar no WhatsApp. Posso ajudar com mais alguma coisa?",()=>addOpcoes([["Voltar ao início",menu]])); },"btn-zap"],
+      ["Recomeçar",menu]
+    ]);
+  });
+}
+$("chatEntrada").onsubmit=e=>{ e.preventDefault(); const v=$("chatInput").value.trim(); if(!v||!fluxo) return; $("chatInput").value=""; responder(v); };
+function abrirChat(){ $("chat").classList.add("aberto"); $("chatBtnTxt").textContent="Fechar"; if(!iniciado){ iniciado=true; menu(); } }
+function fecharChat(){ $("chat").classList.remove("aberto"); $("chatBtnTxt").textContent="Atendimento"; }
+$("chatBtn").onclick=()=> $("chat").classList.contains("aberto")?fecharChat():abrirChat();
+$("chatFechar").onclick=fecharChat;
+
+render(); rota();
+</script>
+</body>
+</html>
