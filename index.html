@@ -463,21 +463,14 @@
 
 <script>
 /* ============================================================
-   CONFIGURAÇÃO — troque aqui
+   Os dados do site ficam em dois arquivos, editados pelo painel (Pages CMS):
+   dados/config.json  -> WhatsApp, CRECI, modo captação, VSL
+   dados/imoveis.json -> lista de imóveis
+   Abaixo ficam só os valores padrão, usados se os arquivos não carregarem.
    ============================================================ */
-const WHATSAPP = "5567996936202";
-const CRECI = "14735";
-const MODO_CAPTACAO = true;  // true = site focado em captar imóveis; false = vitrine em destaque
-const VIDEO_VSL = "";  // link do YouTube da VSL (vídeo de vendas) que aparece no topo; "" esconde
-/* Em cada imóvel dá para colocar  video:"link do YouTube"  */
-const CIDADES = ["Chapadão do Sul","Costa Rica","Paraíso das Águas","Figueirão"];
-
-/* ============================================================
-   IMÓVEIS — para adicionar, copie um bloco { ... }
-   fotos: lista de fotos, ex.: ["fotos/cs001-1.jpg","fotos/cs001-2.jpg"]
-   deixe [] para usar a ilustração.
-   ============================================================ */
-const IMOVEIS = [
+const PADRAO_CONFIG = { whatsapp:"5567996936202", creci:"14735", modo_captacao:true, video_vsl:"",
+  cidades:["Chapadão do Sul","Costa Rica","Paraíso das Águas","Figueirão"] };
+const EXEMPLOS = [
   { cod:"CS001", exemplo:true, titulo:"Casa 3 quartos com suíte e área gourmet", cidade:"Chapadão do Sul", bairro:"Jardim Paraíso", negocio:"Venda", tipo:"Casa", preco:420000, quartos:3, suites:1, banheiros:2, vagas:2, area:180, terreno:360, financia:true, fotos:[], cor:1,
     descricao:"Casa ampla com sala integrada, cozinha planejada, área gourmet com churrasqueira e quintal gramado. Rua asfaltada, perto de escola e mercado." },
   { cod:"CS002", exemplo:true, titulo:"Terreno de esquina pronto para construir", cidade:"Chapadão do Sul", bairro:"Parque União", negocio:"Venda", tipo:"Terreno", preco:115000, area:360, terreno:360, financia:true, fotos:[], cor:2,
@@ -491,7 +484,32 @@ const IMOVEIS = [
   { cod:"FG001", exemplo:true, titulo:"Casa 2 quartos perto do comércio", cidade:"Figueirão", bairro:"Centro", negocio:"Aluguel", tipo:"Casa", preco:1100, quartos:2, banheiros:1, vagas:1, area:70, fotos:[], cor:6,
     descricao:"Casa simples e bem conservada, a duas quadras do comércio. Aceita pet." },
 ];
+function normalizar(lista){
+  const n=v=>{ const x=Number(String(v??"").replace(/\./g,"").replace(",",".")); return isFinite(x)?x:0; };
+  return (Array.isArray(lista)?lista:[]).filter(i=>i && i.publicado!==false && i.titulo)
+    .map((i,k)=>({...i, cod:String(i.cod||("IM"+String(k+1).padStart(3,"0"))).toUpperCase(),
+      preco:n(i.preco), quartos:n(i.quartos), suites:n(i.suites), banheiros:n(i.banheiros), vagas:n(i.vagas),
+      area:n(i.area), terreno:n(i.terreno), fotos:(Array.isArray(i.fotos)?i.fotos:[]).filter(Boolean),
+      negocio:i.negocio||"Venda", tipo:i.tipo||"Casa", status:i.status||"Disponível", bairro:i.bairro||"",
+      cor:(k%6)+1 })).reverse();
+}
+async function carregarDados(){
+  try{
+    const [c,i]=await Promise.all([
+      fetch("dados/config.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw 0;return r.json();}),
+      fetch("dados/imoveis.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw 0;return r.json();})]);
+    return {cfg:{...PADRAO_CONFIG,...c}, lista:normalizar(i)};
+  }catch(e){ return {cfg:PADRAO_CONFIG, lista:EXEMPLOS}; }
+}
+carregarDados().then(d=>iniciarSite(d.cfg,d.lista));
 
+function iniciarSite(CFG,LISTA){
+const WHATSAPP = String(CFG.whatsapp||"").replace(/\D/g,"");
+const CRECI = CFG.creci||"";
+const MODO_CAPTACAO = CFG.modo_captacao!==false;
+const VIDEO_VSL = CFG.video_vsl||"";
+const CIDADES = (CFG.cidades&&CFG.cidades.length)?CFG.cidades:PADRAO_CONFIG.cidades;
+const IMOVEIS = LISTA;
 /* ============================================================
    Funcionamento do site
    ============================================================ */
@@ -589,7 +607,7 @@ function render(){
       <div class="foto">${fotoHTML(im)}
         <span class="tag ${im.negocio==="Aluguel"?"aluguel":""}">${im.negocio}</span>
         <button class="fav ${favs.includes(im.cod)?"on":""}" data-fav="${im.cod}" aria-label="Favoritar">${ic.cor}</button>
-        ${im.exemplo?'<span class="tag2">Exemplo</span>':im.video?'<span class="tag2">▶ Vídeo</span>':im.fotos.length>1?`<span class="tag2">${im.fotos.length} fotos</span>`:""}
+        ${im.status&&im.status!=="Disponível"?`<span class="tag2" style="background:#b3261e">${im.status}</span>`:im.exemplo?'<span class="tag2">Exemplo</span>':im.video?'<span class="tag2">▶ Vídeo</span>':im.fotos.length>1?`<span class="tag2">${im.fotos.length} fotos</span>`:""}
       </div>
       <div class="card-corpo">
         <div class="preco">${brl(im.preco)}${im.negocio==="Aluguel"?" <small>/mês</small>":""}</div>
@@ -657,7 +675,7 @@ function abrir(cod){
     </div>
     <div class="det">
       <div>
-        <div class="cod">CÓD. ${im.cod} · ${im.tipo} para ${im.negocio.toLowerCase()}</div>
+        <div class="cod">CÓD. ${im.cod} · ${im.tipo} para ${im.negocio.toLowerCase()}${im.status&&im.status!=="Disponível"?` · <b style="color:#b3261e">${im.status.toUpperCase()}</b>`:""}</div>
         <h2>${im.titulo}</h2>
         <div class="local" style="margin-top:6px">${ic.pin}${im.bairro} · ${im.cidade} - MS</div>
       </div>
@@ -838,6 +856,8 @@ $("chatBtn").onclick=()=> $("chat").classList.contains("aberto")?fecharChat():ab
 $("chatFechar").onclick=fecharChat;
 
 render(); rota();
+Object.assign(window,{fechar,gal,compartilhar,alternarFav,abrir});
+}
 </script>
 </body>
 </html>

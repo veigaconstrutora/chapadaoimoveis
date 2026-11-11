@@ -1,0 +1,115 @@
+# Configuração do painel Pages CMS (app.pagescms.org)
+media:
+  input: fotos
+  output: /fotos
+  rename: safe
+  extensions: [jpg, jpeg, png, webp]
+
+content:
+  - name: imoveis
+    label: Imóveis
+    type: file
+    path: dados/imoveis.json
+    format: json
+    list: true
+    fields:
+      - name: publicado
+        label: Publicado no site
+        type: boolean
+        default: true
+      - name: status
+        label: Situação
+        type: select
+        default: Disponível
+        options:
+          values: [Disponível, Reservado, Vendido, Alugado]
+      - name: cod
+        label: Código (ex. CS001, CR001, PA001, FG001)
+        type: string
+        required: true
+      - name: titulo
+        label: Título do anúncio
+        type: string
+        required: true
+      - name: negocio
+        label: Negócio
+        type: select
+        default: Venda
+        options:
+          values: [Venda, Aluguel]
+      - name: tipo
+        label: Tipo
+        type: select
+        default: Casa
+        options:
+          values: [Casa, Terreno, Apartamento, Chácara / sítio, Comercial]
+      - name: cidade
+        label: Cidade
+        type: select
+        default: Chapadão do Sul
+        options:
+          values: [Chapadão do Sul, Costa Rica, Paraíso das Águas, Figueirão]
+      - name: bairro
+        label: Bairro
+        type: string
+      - name: preco
+        label: Preço em reais (só números; aluguel = valor por mês)
+        type: number
+        required: true
+      - name: quartos
+        label: Quartos
+        type: number
+      - name: suites
+        label: Suítes
+        type: number
+      - name: banheiros
+        label: Banheiros
+        type: number
+      - name: vagas
+        label: Vagas de garagem
+        type: number
+      - name: area
+        label: Área construída em m² (terreno = área do terreno)
+        type: number
+      - name: terreno
+        label: Área do terreno em m²
+        type: number
+      - name: financia
+        label: Aceita financiamento / MCMV
+        type: boolean
+        default: true
+      - name: fotos
+        label: Fotos (a primeira é a capa)
+        type: image
+        list:
+          max: 25
+      - name: video
+        label: Link do vídeo no YouTube (opcional)
+        type: string
+      - name: descricao
+        label: Descrição
+        type: text
+
+  - name: config
+    label: Configurações do site
+    type: file
+    path: dados/config.json
+    format: json
+    fields:
+      - name: whatsapp
+        label: WhatsApp de atendimento (com 55 e DDD, só números)
+        type: string
+        required: true
+      - name: creci
+        label: Número do CRECI
+        type: string
+      - name: modo_captacao
+        label: Modo captação (topo focado em proprietários)
+        type: boolean
+      - name: video_vsl
+        label: Link da VSL no YouTube
+        type: string
+      - name: cidades
+        label: Cidades atendidas
+        type: string
+        list: true

@@ -1,0 +1,24 @@
+# Reduz o tamanho das fotos enviadas pelo painel (max. 1600px, qualidade 80)
+name: Otimizar fotos
+on:
+  push:
+    branches: [main]
+    paths: ["fotos/**"]
+permissions:
+  contents: write
+jobs:
+  otimizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reduzir fotos grandes
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick
+          find fotos -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) -size +500k -print0 |
+            xargs -0 -r -n1 mogrify -auto-orient -resize '1600x1600>' -strip -quality 80
+      - name: Salvar
+        run: |
+          git config user.name "otimizador-de-fotos"
+          git config user.email "actions@users.noreply.github.com"
+          git add fotos
+          git diff --cached --quiet || (git commit -m "Otimiza fotos" && git push)
