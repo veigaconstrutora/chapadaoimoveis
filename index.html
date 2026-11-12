@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chapadão Imóveis · Marcio Veiga</title>
 <meta name="description" content="Casas, terrenos e apartamentos em Chapadão do Sul, Costa Rica, Paraíso das Águas e Figueirão. Corretor Marcio Veiga, CRECI-MS 14735. Simulação de financiamento e MCMV.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="canonical" href="https://chapadaoimoveis.com.br/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#1f4d3a">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Chapadão Imóveis">
+<meta property="og:url" content="https://chapadaoimoveis.com.br/">
+<meta property="og:title" content="Chapadão Imóveis · Venda, aluguel e construção">
+<meta property="og:description" content="Casas, terrenos e apartamentos em Chapadão do Sul, Costa Rica, Paraíso das Águas e Figueirão. Avaliação gratuita e simulação MCMV.">
+<meta property="og:image" content="https://chapadaoimoveis.com.br/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -41,7 +57,7 @@
   .btn-zap:hover{background:#178a48}
   .btn-verde{background:var(--verde);color:#fff}
   .btn-contorno{background:var(--branco);color:var(--verde);border:1px solid var(--linha)}
-  .btn-sm{padding:9px 16px;font-size:14px}
+  .btn-sm{padding:11px 16px;font-size:14px;min-height:44px}
   @media(max-width:860px){nav.menu{display:none}}
   @media(max-width:420px){.topo .btn-zap span{display:none}.topo .btn-zap{padding:10px}}
 
@@ -136,7 +152,7 @@
   .barra{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
   .barra .contador{font-size:14px;color:var(--suave)}
   .barra .acoes{display:flex;gap:8px}
-  .chip{border:1px solid var(--linha);background:var(--branco);padding:8px 14px;border-radius:999px;font:500 13px Inter,sans-serif;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+  .chip{border:1px solid var(--linha);background:var(--branco);padding:8px 14px;min-height:44px;border-radius:999px;font:500 13px Inter,sans-serif;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
   .chip.ativo{background:var(--verde);border-color:var(--verde);color:#fff}
 
   .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}
@@ -272,13 +288,13 @@
     <form class="capt-form form" id="formCapt">
       <h3>Cadastre seu imóvel</h3>
       <p>Leva 1 minuto. Eu te chamo no WhatsApp para combinar a avaliação.</p>
-      <input id="cNome" placeholder="Seu nome" required>
+      <input id="cNome" aria-label="Seu nome" placeholder="Seu nome" required>
       <div class="linha2">
-        <select id="cNeg"><option>Quero vender</option><option>Quero alugar</option></select>
-        <select id="cTipo"><option>Casa</option><option>Terreno</option><option>Apartamento</option><option>Chácara / sítio</option><option>Comercial</option></select>
+        <select id="cNeg" aria-label="Vender ou alugar"><option>Quero vender</option><option>Quero alugar</option></select>
+        <select id="cTipo" aria-label="Tipo de imóvel"><option>Casa</option><option>Terreno</option><option>Apartamento</option><option>Chácara / sítio</option><option>Comercial</option></select>
       </div>
-      <select id="cCidade"></select>
-      <input id="cDesc" placeholder="Bairro e detalhes (ex.: 3 quartos, Esplanada)">
+      <select id="cCidade" aria-label="Cidade"></select>
+      <input id="cDesc" aria-label="Bairro e detalhes" placeholder="Bairro e detalhes (ex.: 3 quartos, Esplanada)">
       <button class="btn btn-zap" type="submit">Enviar pelo WhatsApp</button>
     </form>
   </div>
@@ -391,9 +407,9 @@
       <h2>Não encontrou o imóvel ideal?</h2>
       <p>Diga o que procura e eu te aviso no WhatsApp assim que aparecer.</p>
       <form class="form" id="formProcura">
-        <input id="pNome" placeholder="Seu nome" required>
-        <select id="pCidade"></select>
-        <input id="pDesc" placeholder="Ex.: casa 3 quartos até R$ 350 mil">
+        <input id="pNome" aria-label="Seu nome" placeholder="Seu nome" required>
+        <select id="pCidade" aria-label="Cidade"></select>
+        <input id="pDesc" aria-label="O que você procura" placeholder="Ex.: casa 3 quartos até R$ 350 mil">
         <button class="btn btn-zap" type="submit">Me avise no WhatsApp</button>
       </form>
     </div>
@@ -401,9 +417,9 @@
       <h2>Quer vender ou alugar seu imóvel?</h2>
       <p>Avaliação gratuita e divulgação com quem conhece o mercado da região.</p>
       <form class="form" id="formAnuncie">
-        <input id="aNome" placeholder="Seu nome" required>
-        <select id="aNeg"><option>Quero vender</option><option>Quero alugar</option><option>Quero uma avaliação</option></select>
-        <textarea id="aDesc" placeholder="Endereço e uma descrição rápida do imóvel"></textarea>
+        <input id="aNome" aria-label="Seu nome" placeholder="Seu nome" required>
+        <select id="aNeg" aria-label="O que deseja"><option>Quero vender</option><option>Quero alugar</option><option>Quero uma avaliação</option></select>
+        <textarea id="aDesc" aria-label="Endereço e descrição" placeholder="Endereço e uma descrição rápida do imóvel"></textarea>
         <button class="btn btn-verde" type="submit">Enviar pelo WhatsApp</button>
       </form>
     </div>
@@ -455,7 +471,7 @@
 <div class="chat" id="chat" role="dialog" aria-label="Atendimento">
   <div class="chat-topo"><div class="av">MV</div><div><b>Atendimento Marcio Veiga</b><small>Responde em minutos no WhatsApp</small></div><button id="chatFechar" aria-label="Fechar">×</button></div>
   <div class="chat-corpo" id="chatCorpo"></div>
-  <form class="chat-entrada off" id="chatEntrada"><input id="chatInput" placeholder="Digite aqui…" autocomplete="off"><button type="submit" aria-label="Enviar">➤</button></form>
+  <form class="chat-entrada off" id="chatEntrada"><input id="chatInput" aria-label="Mensagem" placeholder="Digite aqui…" autocomplete="off"><button type="submit" aria-label="Enviar">➤</button></form>
 </div>
 
 <div class="modal" id="modal"><div class="modal-in" id="modalIn"></div></div>
@@ -484,12 +500,15 @@ const EXEMPLOS = [
   { cod:"FG001", exemplo:true, titulo:"Casa 2 quartos perto do comércio", cidade:"Figueirão", bairro:"Centro", negocio:"Aluguel", tipo:"Casa", preco:1100, quartos:2, banheiros:1, vagas:1, area:70, fotos:[], cor:6,
     descricao:"Casa simples e bem conservada, a duas quadras do comércio. Aceita pet." },
 ];
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
+const ytOk=u=>/^https:\/\/(www\.|m\.)?(youtube\.com|youtu\.be)\/[\w\-?=&\/.%]+$/.test(String(u||""));
+const fotoOk=u=>/^(\/fotos\/|https:\/\/)[^"'<>\s]+$/.test(String(u||""));
 function normalizar(lista){
   const n=v=>{ const x=Number(String(v??"").replace(/\./g,"").replace(",",".")); return isFinite(x)?x:0; };
   return (Array.isArray(lista)?lista:[]).filter(i=>i && i.publicado!==false && i.titulo)
-    .map((i,k)=>({...i, cod:String(i.cod||("IM"+String(k+1).padStart(3,"0"))).toUpperCase(),
+    .map((i,k)=>({...i, cod:(String(i.cod||("IM"+String(k+1).padStart(3,"0"))).toUpperCase().replace(/[^A-Z0-9-]/g,""))||("IM"+(k+1)), video:ytOk(i.video)?i.video:"",
       preco:n(i.preco), quartos:n(i.quartos), suites:n(i.suites), banheiros:n(i.banheiros), vagas:n(i.vagas),
-      area:n(i.area), terreno:n(i.terreno), fotos:(Array.isArray(i.fotos)?i.fotos:[]).filter(Boolean),
+      area:n(i.area), terreno:n(i.terreno), fotos:(Array.isArray(i.fotos)?i.fotos:[]).filter(fotoOk),
       negocio:i.negocio||"Venda", tipo:i.tipo||"Casa", status:i.status||"Disponível", bairro:i.bairro||"",
       cor:(k%6)+1 })).reverse();
 }
@@ -507,7 +526,7 @@ function iniciarSite(CFG,LISTA){
 const WHATSAPP = String(CFG.whatsapp||"").replace(/\D/g,"");
 const CRECI = CFG.creci||"";
 const MODO_CAPTACAO = CFG.modo_captacao!==false;
-const VIDEO_VSL = CFG.video_vsl||"";
+const VIDEO_VSL = ytOk(CFG.video_vsl)?CFG.video_vsl:"";
 const CIDADES = (CFG.cidades&&CFG.cidades.length)?CFG.cidades:PADRAO_CONFIG.cidades;
 const IMOVEIS = LISTA;
 /* ============================================================
@@ -541,7 +560,7 @@ function ilustracao(im){
   if(im.tipo==="Apartamento") return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="${bg}"/><circle cx="80" cy="70" r="28" fill="${b}" opacity=".5"/><rect x="130" y="60" width="140" height="210" rx="6" fill="${a}"/>${[0,1,2,3,4].map(r=>[0,1,2].map(c=>`<rect x="${148+c*42}" y="${78+r*36}" width="26" height="22" rx="3" fill="${bg}" opacity=".9"/>`).join("")).join("")}<rect x="0" y="268" width="400" height="32" fill="${a}" opacity=".25"/></svg>`;
   return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="${bg}"/><circle cx="320" cy="70" r="30" fill="${b}" opacity=".55"/><path d="M0 250 Q200 225 400 250 V300 H0Z" fill="${a}" opacity=".22"/><path d="M110 150 L200 85 L290 150Z" fill="${b}"/><rect x="125" y="148" width="150" height="102" fill="${a}"/><rect x="185" y="190" width="30" height="60" rx="3" fill="${bg}"/><rect x="142" y="170" width="28" height="24" rx="3" fill="${bg}"/><rect x="230" y="170" width="28" height="24" rx="3" fill="${bg}"/><circle cx="70" cy="215" r="26" fill="${a}" opacity=".5"/><rect x="67" y="225" width="6" height="28" fill="${a}" opacity=".6"/></svg>`;
 }
-const fotoHTML=(im,i=0)=> im.fotos&&im.fotos.length ? `<img src="${im.fotos[i]}" alt="${im.titulo}" loading="lazy">` : ilustracao(im);
+const fotoHTML=(im,i=0)=> im.fotos&&im.fotos.length ? `<img src="${esc(im.fotos[i])}" alt="${esc(im.titulo)}" loading="lazy">` : ilustracao(im);
 
 const ic={
   quarto:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M7 10V7h10v3"/></svg>',
@@ -554,7 +573,7 @@ const ic={
 
 /* Preenche as listas */
 const tipos=["Todos",...new Set(IMOVEIS.map(i=>i.tipo))];
-const opts=(arr)=>arr.map(o=>`<option>${o}</option>`).join("");
+const opts=(arr)=>arr.map(o=>`<option>${esc(o)}</option>`).join("");
 $("fCidade").innerHTML=opts(["Todas",...CIDADES]);
 $("hCidade").innerHTML=`<option value="Todas">Todas as cidades</option>`+opts(CIDADES);
 $("fTipo").innerHTML=opts(tipos);
@@ -607,12 +626,12 @@ function render(){
       <div class="foto">${fotoHTML(im)}
         <span class="tag ${im.negocio==="Aluguel"?"aluguel":""}">${im.negocio}</span>
         <button class="fav ${favs.includes(im.cod)?"on":""}" data-fav="${im.cod}" aria-label="Favoritar">${ic.cor}</button>
-        ${im.status&&im.status!=="Disponível"?`<span class="tag2" style="background:#b3261e">${im.status}</span>`:im.exemplo?'<span class="tag2">Exemplo</span>':im.video?'<span class="tag2">▶ Vídeo</span>':im.fotos.length>1?`<span class="tag2">${im.fotos.length} fotos</span>`:""}
+        ${im.status&&im.status!=="Disponível"?`<span class="tag2" style="background:#b3261e">${esc(im.status)}</span>`:im.exemplo?'<span class="tag2">Exemplo</span>':im.video?'<span class="tag2">▶ Vídeo</span>':im.fotos.length>1?`<span class="tag2">${im.fotos.length} fotos</span>`:""}
       </div>
       <div class="card-corpo">
         <div class="preco">${brl(im.preco)}${im.negocio==="Aluguel"?" <small>/mês</small>":""}</div>
-        <h3>${im.titulo}</h3>
-        <div class="local">${ic.pin}${im.bairro} · ${im.cidade}</div>
+        <h3>${esc(im.titulo)}</h3>
+        <div class="local">${ic.pin}${esc(im.bairro)} · ${esc(im.cidade)}</div>
         <div class="carac">${c.join("")}</div>
         <div class="cod">CÓD. ${im.cod}</div>
       </div></article>`;
@@ -675,13 +694,13 @@ function abrir(cod){
     </div>
     <div class="det">
       <div>
-        <div class="cod">CÓD. ${im.cod} · ${im.tipo} para ${im.negocio.toLowerCase()}${im.status&&im.status!=="Disponível"?` · <b style="color:#b3261e">${im.status.toUpperCase()}</b>`:""}</div>
-        <h2>${im.titulo}</h2>
-        <div class="local" style="margin-top:6px">${ic.pin}${im.bairro} · ${im.cidade} - MS</div>
+        <div class="cod">CÓD. ${im.cod} · ${esc(im.tipo)} para ${esc(im.negocio.toLowerCase())}${im.status&&im.status!=="Disponível"?` · <b style="color:#b3261e">${esc(im.status.toUpperCase())}</b>`:""}</div>
+        <h2>${esc(im.titulo)}</h2>
+        <div class="local" style="margin-top:6px">${ic.pin}${esc(im.bairro)} · ${esc(im.cidade)} - MS</div>
       </div>
       <div class="preco" style="font-size:30px">${brl(im.preco)}${im.negocio==="Aluguel"?" <small>/mês</small>":""}</div>
       ${det.length?`<div class="det-carac">${det.map(d=>`<div><b>${d[1]}</b>${d[0]}</div>`).join("")}</div>`:""}
-      <p>${im.descricao||""}</p>
+      <p>${esc(im.descricao)}</p>
       ${im.video?videoHTML(im.video,"Ver vídeo do imóvel"):""}
       ${parcela}
       <div class="det-acoes">
@@ -733,7 +752,7 @@ const PLAY='<i><svg width="26" height="26" viewBox="0 0 24 24" fill="#1f4d3a"><p
 function videoHTML(url,legenda){
   const id=ytId(url);
   if(id && noDominio) return `<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="${legenda}" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`;
-  return `<a class="video" href="${url}" target="_blank" rel="noopener"><span class="video-capa">${PLAY}${legenda}</span></a>`;
+  return `<a class="video" href="${esc(url)}" target="_blank" rel="noopener"><span class="video-capa">${PLAY}${legenda}</span></a>`;
 }
 if(VIDEO_VSL) $("videoApres").innerHTML=videoHTML(VIDEO_VSL,"Assista: como vendo o seu imóvel");
 else if(!noDominio) $("videoApres").innerHTML=`<div class="video"><span class="video-capa">${PLAY}Espaço da sua VSL<small style="font-weight:400;opacity:.8">aparece aqui quando você me mandar o link do vídeo</small></span></div>`;
