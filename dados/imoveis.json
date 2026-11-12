@@ -1,1 +1,27 @@
-[]
+[
+  {
+    "publicado": true,
+    "status": "Disponível",
+    "cod": "Cs001",
+    "titulo": "Casa a venda",
+    "negocio": "Venda",
+    "tipo": "Casa",
+    "cidade": "Chapadão do Sul",
+    "bairro": "Esplanada",
+    "preco": 270,
+    "quartos": 2,
+    "suites": 0,
+    "banheiros": 2,
+    "vagas": 2,
+    "financia": true,
+    "fotos": [
+      "/fotos/1000832462.jpg",
+      "/fotos/1000832428.jpg",
+      "/fotos/1000832425.jpg",
+      "/fotos/1000832422.jpg",
+      "/fotos/1000832420.jpg",
+      "/fotos/1000832417.jpg"
+    ],
+    "descricao": "Casa na rua dos Pavões com laje 368- Bairro Esplanada, contém nos fundos uma edícula."
+  }
+]
