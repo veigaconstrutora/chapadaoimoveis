@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Gerador de post · Chapadão Imóveis</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ceu:#E6F0F4;--fundo:#F5F8F6;--tinta:#132A24;--suave:#5A6E68;--soja:#17A35B;--cerrado:#123F33;--sol:#E9A93E;--linha:#D3E0E4;--cartao:#fff}
+  @media (prefers-color-scheme: dark){:root{--ceu:#0C1C22;--fundo:#0F2228;--tinta:#E8F1EE;--suave:#93A8A2;--linha:#21383F;--cartao:#12262C}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Manrope,system-ui,sans-serif;background:var(--fundo);color:var(--tinta);line-height:1.5}
+  :focus-visible{outline:3px solid var(--soja);outline-offset:2px}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px}
+  header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  header .ic{width:40px;height:40px;border-radius:12px;background:var(--cerrado);display:grid;place-items:center}
+  h1{font-family:Sora,sans-serif;font-size:24px;letter-spacing:-.02em}
+  header p{font-size:14px;color:var(--suave)}
+  .grade{display:grid;grid-template-columns:360px 1fr;gap:22px;align-items:start}
+  @media(max-width:860px){.grade{grid-template-columns:1fr}}
+  .painel{background:var(--cartao);border:1px solid var(--linha);border-radius:22px;padding:18px;display:grid;gap:14px}
+  label{display:grid;gap:6px;font-size:14px;font-weight:700;color:var(--suave)}
+  select,textarea{width:100%;min-height:48px;border:1px solid var(--linha);border-radius:12px;padding:0 12px;background:var(--fundo);color:var(--tinta);font:600 15px Manrope,sans-serif}
+  textarea{padding:12px;min-height:220px;font-weight:500;font-size:14px;line-height:1.5;resize:vertical}
+  .seg{display:grid;grid-template-columns:1fr 1fr;background:var(--fundo);border:1px solid var(--linha);border-radius:14px;padding:4px;gap:4px}
+  .seg button{min-height:44px;border:0;border-radius:10px;background:transparent;font:700 14px Manrope,sans-serif;color:var(--suave);cursor:pointer}
+  .seg button.ativo{background:var(--cerrado);color:#fff}
+  .btn{min-height:50px;border:0;border-radius:999px;font:700 15px Manrope,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 18px}
+  .btn-ver{background:#1FAA59;color:#fff}
+  .btn-esc{background:var(--cerrado);color:#fff}
+  .btn-cla{background:var(--fundo);color:var(--tinta);border:1px solid var(--linha)}
+  .acoes{display:grid;gap:8px}
+  .previa{background:var(--cartao);border:1px solid var(--linha);border-radius:22px;padding:16px;display:grid;place-items:center}
+  canvas{width:100%;max-width:440px;height:auto;border-radius:14px;box-shadow:0 18px 40px -22px rgba(18,63,51,.45)}
+  .dica{font-size:13px;color:var(--suave)}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--tinta);color:var(--fundo);padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+  .toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E9A93E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
+    <div><h1>Gerador de post</h1><p>Escolha o imóvel e o formato. A arte e a legenda saem prontas.</p></div>
+  </header>
+
+  <div class="grade">
+    <div class="painel">
+      <label>Post de
+        <select id="escolha" aria-label="Imóvel"></select>
+      </label>
+      <div>
+        <div class="seg" role="tablist" aria-label="Formato">
+          <button type="button" data-f="feed" class="ativo">Feed</button>
+          <button type="button" data-f="story">Status e Stories</button>
+        </div>
+      </div>
+      <div class="acoes">
+        <button class="btn btn-ver" id="btCompartilhar" type="button">Compartilhar arte</button>
+        <button class="btn btn-esc" id="btBaixar" type="button">Baixar arte</button>
+      </div>
+      <label>Legenda
+        <textarea id="legenda" aria-label="Legenda"></textarea>
+      </label>
+      <button class="btn btn-cla" id="btCopiar" type="button">Copiar legenda</button>
+      <p class="dica">No celular, "Compartilhar arte" abre a lista de apps (Instagram, WhatsApp, Facebook). Copie a legenda antes e cole no app.</p>
+    </div>
+    <div class="previa"><canvas id="tela" width="1080" height="1350" aria-label="Prévia da arte"></canvas></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const PADRAO={whatsapp:"5567996936202",creci:"14735"};
+const EXEMPLOS=[{cod:"CS001",titulo:"Casa 3 quartos com suíte e área gourmet",cidade:"Chapadão do Sul",bairro:"Jardim Paraíso",negocio:"Venda",tipo:"Casa",preco:420000,quartos:3,suites:1,banheiros:2,vagas:2,area:180,financia:true,fotos:[],status:"Disponível",descricao:"Casa ampla com sala integrada, cozinha planejada e área gourmet com churrasqueira."},
+ {cod:"CR001",titulo:"Casa 2 quartos, ideal para Minha Casa Minha Vida",cidade:"Costa Rica",bairro:"Centro",negocio:"Venda",tipo:"Casa",preco:235000,quartos:2,banheiros:1,vagas:1,area:62,financia:true,fotos:[],status:"Vendido",descricao:"Casa nova, pronta para morar."}];
+const fotoOk=u=>/^\/fotos\/[^"'<>\s]+$/.test(String(u||""));
+const brl=v=>Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
+const $=id=>document.getElementById(id);
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove("on"),1800);}
+let CFG=PADRAO, LISTA=[], formato="feed";
+
+async function carregar(){
+  try{
+    const [c,i]=await Promise.all(["dados/config.json","dados/imoveis.json"].map(u=>fetch(u,{cache:"no-store"}).then(r=>{if(!r.ok)throw 0;return r.json();})));
+    CFG={...PADRAO,...c};
+    LISTA=(Array.isArray(i)?i:[]).filter(x=>x&&x.titulo&&x.publicado!==false).map(x=>({...x,cod:String(x.cod||"").toUpperCase().replace(/[^A-Z0-9-]/g,""),fotos:(x.fotos||[]).filter(fotoOk)})).reverse();
+  }catch(e){ LISTA=EXEMPLOS; }
+  const sel=$("escolha");
+  sel.innerHTML='<option value="__capt">Captação: "Quer vender seu imóvel?"</option>'+LISTA.map((x,k)=>`<option value="${k}">${x.cod} · ${String(x.titulo).replace(/[<>&"]/g,"")}</option>`).join("");
+  if(LISTA.length) sel.value="0";
+  await Promise.all([document.fonts.load("700 80px Sora, Arial, sans-serif"),document.fonts.load("600 40px Manrope, Arial, sans-serif"),document.fonts.load("700 40px Manrope, Arial, sans-serif")]).catch(()=>{});
+  desenhar();
+}
+
+const carregarImg=src=>new Promise(ok=>{const im=new Image();im.onload=()=>ok(im);im.onerror=()=>ok(null);im.src=src;});
+function cobrir(ctx,img,x,y,w,h){const r=Math.max(w/img.width,h/img.height),iw=img.width*r,ih=img.height*r;ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();ctx.drawImage(img,x+(w-iw)/2,y+(h-ih)/2,iw,ih);ctx.restore();}
+function arred(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function quebrar(ctx,t,max){const p=String(t).split(" ");const l=[];let a="";for(const w of p){const n=a?a+" "+w:w;if(ctx.measureText(n).width>max&&a){l.push(a);a=w;}else a=n;}if(a)l.push(a);return l;}
+function horizonte(ctx,W,y,h){ // céu, sol e lavoura: a assinatura visual da marca
+  const g=ctx.createLinearGradient(0,0,0,y+h);g.addColorStop(0,"#0F3B2E");g.addColorStop(1,"#1A5A45");ctx.fillStyle=g;ctx.fillRect(0,0,W,y+h);
+  const s=ctx.createRadialGradient(W/2,y,0,W/2,y,W*0.55);s.addColorStop(0,"rgba(233,169,62,.55)");s.addColorStop(.4,"rgba(233,169,62,.15)");s.addColorStop(1,"rgba(233,169,62,0)");ctx.fillStyle=s;ctx.fillRect(0,0,W,y+h);
+  ctx.strokeStyle="rgba(233,169,62,.8)";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+  ctx.strokeStyle="rgba(43,197,114,.35)";ctx.lineWidth=3;for(let i=-24;i<=24;i++){ctx.beginPath();ctx.moveTo(W/2+i*18,y);ctx.lineTo(W/2+i*150,y+h);ctx.stroke();}
+}
+function casaIlustrada(ctx,x,y,w,h){ctx.fillStyle="#DCE9E2";ctx.fillRect(x,y,w,h);ctx.fillStyle="#E9A93E";ctx.beginPath();ctx.moveTo(x+w*.3,y+h*.48);ctx.lineTo(x+w*.5,y+h*.28);ctx.lineTo(x+w*.7,y+h*.48);ctx.fill();ctx.fillStyle="#123F33";ctx.fillRect(x+w*.33,y+h*.47,w*.34,h*.3);ctx.fillStyle="#DCE9E2";ctx.fillRect(x+w*.46,y+h*.6,w*.08,h*.17);ctx.fillStyle="rgba(18,63,51,.18)";ctx.fillRect(x,y+h*.77,w,h*.23);}
+
+async function desenhar(){
+  const cv=$("tela"),ctx=cv.getContext("2d");
+  const W=1080,H=formato==="feed"?1350:1920; cv.width=W; cv.height=H;
+  const v=$("escolha").value, creci=CFG.creci||"";
+  ctx.textBaseline="alphabetic";
+  if(v==="__capt"){ // post de captação
+    horizonte(ctx,W,H*0.62,H*0.38);
+    ctx.fillStyle="#E9A93E";ctx.font="700 34px Manrope, Arial, sans-serif";ctx.fillText("Chapadão Imóveis",80,120);
+    ctx.fillStyle="#fff";ctx.font=`700 ${formato==="feed"?104:118}px Sora, Arial, sans-serif`;
+    let y=formato==="feed"?300:420; for(const l of quebrar(ctx,"Quer vender ou alugar seu imóvel?",W-160)){ctx.fillText(l,80,y);y+=formato==="feed"?112:128;}
+    ctx.font="600 42px Manrope, Arial, sans-serif";ctx.fillStyle="rgba(232,241,238,.9)";y+=30;
+    for(const t of ["Avaliação gratuita, sem compromisso","Anúncio com fotos e página própria","Atendimento a quem financia pelo MCMV"]){ctx.fillStyle="#2BC572";ctx.beginPath();ctx.arc(98,y-14,12,0,7);ctx.fill();ctx.fillStyle="rgba(232,241,238,.92)";ctx.fillText(t,128,y);y+=70;}
+    ctx.fillStyle="#1FAA59";arred(ctx,80,H-250,W-160,110,55);ctx.fill();ctx.fillStyle="#fff";ctx.font="700 44px Manrope, Arial, sans-serif";ctx.textAlign="center";ctx.fillText("WhatsApp (67) 99693-6202",W/2,H-180);
+    ctx.font="600 30px Manrope, Arial, sans-serif";ctx.fillStyle="rgba(232,241,238,.8)";ctx.fillText(`chapadaoimoveis.com.br · Marcio Veiga, CRECI-MS ${creci}`,W/2,H-80);ctx.textAlign="left";
+    $("legenda").value=`🏡 Quer vender ou alugar seu imóvel?\n\nFaço a avaliação gratuita e anuncio com fotos, vídeo e página própria no site, com divulgação em Chapadão do Sul, Costa Rica, Paraíso das Águas e Figueirão.\n\n✅ Atendo quem financia pelo Minha Casa Minha Vida\n✅ Cuido da negociação e da documentação até a escritura\n\n📲 Chame no WhatsApp (67) 99693-6202\n🌐 chapadaoimoveis.com.br\n\nMarcio Veiga · Corretor de Imóveis · CRECI-MS ${creci}\n\n#chapadaodosul #imoveischapadao #costaricams #paraisodasaguas #figueirao #vendaseuimovel #corretordeimoveis #minhacasaminhavida`;
+    return;
+  }
+  const im=LISTA[+v]; if(!im) return;
+  const imgs=(await Promise.all((im.fotos||[]).slice(0,3).map(carregarImg))).filter(Boolean);
+  ctx.fillStyle="#F5F8F6";ctx.fillRect(0,0,W,H);
+  // fotos
+  const fotoH=formato==="feed"?820:1100;
+  if(formato==="story"&&imgs.length>=3){cobrir(ctx,imgs[0],0,0,W,700);cobrir(ctx,imgs[1],0,708,W/2-4,392);cobrir(ctx,imgs[2],W/2+4,708,W/2-4,392);}
+  else if(imgs[0]) cobrir(ctx,imgs[0],0,0,W,fotoH); else casaIlustrada(ctx,0,0,W,fotoH);
+  const sg=ctx.createLinearGradient(0,0,0,220);sg.addColorStop(0,"rgba(0,0,0,.45)");sg.addColorStop(1,"rgba(0,0,0,0)");ctx.fillStyle=sg;ctx.fillRect(0,0,W,220);
+  // selos
+  ctx.font="700 34px Manrope, Arial, sans-serif";let x=56;
+  const selo=(t,bg,fg)=>{const w=ctx.measureText(t).width+52;ctx.fillStyle=bg;arred(ctx,x,52,w,68,34);ctx.fill();ctx.fillStyle=fg;ctx.fillText(t,x+26,98);x+=w+14;};
+  selo(im.negocio==="Aluguel"?"Aluguel":"Venda","rgba(255,255,255,.92)","#123F33");
+  if(im.status&&im.status!=="Disponível") selo(im.status,"#B3261E","#fff"); else if(im.financia) selo("Aceita financiamento","#E9A93E","#1d1406");
+  // faixa inferior com o horizonte
+  const y0=fotoH;
+  ctx.fillStyle="#123F33";ctx.fillRect(0,y0,W,H-y0);
+  const sol=ctx.createRadialGradient(W*0.85,y0,0,W*0.85,y0,520);sol.addColorStop(0,"rgba(233,169,62,.45)");sol.addColorStop(1,"rgba(233,169,62,0)");ctx.fillStyle=sol;ctx.fillRect(0,y0,W,H-y0);
+  ctx.strokeStyle="rgba(233,169,62,.9)";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,y0);ctx.lineTo(W,y0);ctx.stroke();
+  let y=y0+(formato==="feed"?110:130);
+  ctx.fillStyle="#E9A93E";ctx.font=`700 ${formato==="feed"?92:104}px Sora, Arial, sans-serif`;
+  ctx.fillText(brl(im.preco)+(im.negocio==="Aluguel"?"/mês":""),64,y);
+  y+=formato==="feed"?66:80; ctx.fillStyle="#fff";ctx.font=`700 ${formato==="feed"?44:50}px Manrope, Arial, sans-serif`;
+  for(const l of quebrar(ctx,im.titulo,W-128).slice(0,2)){ctx.fillText(l,64,y);y+=formato==="feed"?56:64;}
+  ctx.fillStyle="rgba(232,241,238,.85)";ctx.font=`600 ${formato==="feed"?34:40}px Manrope, Arial, sans-serif`;
+  const det=[im.quartos?`${im.quartos} quarto${im.quartos>1?"s":""}`:"",im.suites?`${im.suites} suíte${im.suites>1?"s":""}`:"",im.vagas?`${im.vagas} vaga${im.vagas>1?"s":""}`:"",im.area?`${im.area} m²`:""].filter(Boolean).join("   ·   ");
+  y+=10; if(det){ctx.fillText(det,64,y);y+=formato==="feed"?52:62;}
+  ctx.fillText(`${im.bairro?im.bairro+", ":""}${im.cidade}`,64,y);
+  // rodapé
+  ctx.fillStyle="rgba(232,241,238,.7)";ctx.font=`600 ${formato==="feed"?28:32}px Manrope, Arial, sans-serif`;
+  ctx.fillText(`Código ${im.cod}  ·  chapadaoimoveis.com.br  ·  CRECI-MS ${creci}`,64,H-(formato==="feed"?56:70));
+  if(formato==="story"){ctx.fillStyle="#1FAA59";arred(ctx,64,H-250,W-128,110,55);ctx.fill();ctx.fillStyle="#fff";ctx.font="700 44px Manrope, Arial, sans-serif";ctx.textAlign="center";ctx.fillText("Chame no WhatsApp: (67) 99693-6202",W/2,H-180);ctx.textAlign="left";}
+  // legenda
+  const link=`https://chapadaoimoveis.com.br/#imovel-${im.cod.toLowerCase()}`;
+  const tag=String(im.cidade||"").normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/\s+/g,"").toLowerCase();
+  const estado=im.status&&im.status!=="Disponível"?`${im.status.toUpperCase()}! `:"";
+  $("legenda").value=`${estado}🏡 ${im.titulo}\n📍 ${im.bairro?im.bairro+", ":""}${im.cidade} - MS\n💰 ${brl(im.preco)}${im.negocio==="Aluguel"?" por mês":""}${im.financia&&im.negocio!=="Aluguel"?" · aceita financiamento":""}\n\n${det?"✅ "+det.replace(/   ·   /g," · ")+"\n":""}${im.descricao?im.descricao+"\n":""}\n🔎 Fotos e detalhes: ${link}\n📲 WhatsApp (67) 99693-6202 · código ${im.cod}\n\nMarcio Veiga · Corretor de Imóveis · CRECI-MS ${creci}\n\n#${tag} #imoveis${tag} #${im.tipo==="Terreno"?"terrenoavenda":im.negocio==="Aluguel"?"aluguel":"casaavenda"} #corretordeimoveis #imoveisms`;
+}
+
+function nomeArquivo(){const v=$("escolha").value;return (v==="__capt"?"captacao":LISTA[+v]?.cod||"post")+"-"+formato+".png";}
+function blob(){return new Promise(ok=>$("tela").toBlob(ok,"image/png"));}
+$("btBaixar").onclick=async()=>{try{const b=await blob();const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=nomeArquivo();document.body.appendChild(a);a.click();a.remove();toast("Arte baixada");}catch(e){toast("Não foi possível baixar. Segure a imagem e salve.");}};
+$("btCompartilhar").onclick=async()=>{try{const b=await blob();const f=new File([b],nomeArquivo(),{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});}else{$("btBaixar").click();}}catch(e){if(e&&e.name!=="AbortError")toast("Use o botão Baixar arte");}};
+$("btCopiar").onclick=async()=>{try{await navigator.clipboard.writeText($("legenda").value);toast("Legenda copiada");}catch(e){$("legenda").select();toast("Selecione e copie a legenda");}};
+$("escolha").onchange=desenhar;
+document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{formato=b.dataset.f;document.querySelectorAll(".seg button").forEach(x=>x.classList.toggle("ativo",x===b));desenhar();});
+carregar();
+</script>
+</body>
+</html>

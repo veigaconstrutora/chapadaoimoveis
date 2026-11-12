@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /.pages.yml
+Disallow: /post.html
 Sitemap: https://chapadaoimoveis.com.br/sitemap.xml
