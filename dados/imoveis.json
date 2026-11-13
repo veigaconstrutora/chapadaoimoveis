@@ -50,5 +50,26 @@
       "/fotos/1000712406.jpg"
     ],
     "descricao": "Casa rua das Rendeiras no bairro Esplanada, contém energia solar, fica próximo da avenida Mato grosso do Sul."
+  },
+  {
+    "publicado": true,
+    "status": "Disponível",
+    "cod": "CS O03 ",
+    "titulo": "Casa a venda ",
+    "negocio": "Venda",
+    "tipo": "Casa",
+    "cidade": "Chapadão do Sul",
+    "bairro": "Sibipiruna ",
+    "preco": 220,
+    "quartos": 3,
+    "suites": 1,
+    "banheiros": 2,
+    "vagas": 1,
+    "financia": true,
+    "fotos": [
+      "/fotos/1000507698.jpg",
+      "/fotos/1000510213.jpg"
+    ],
+    "descricao": "Casa localizada na rua Pato branco."
   }
 ]
