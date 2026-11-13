@@ -23,5 +23,32 @@
       "/fotos/1000832417.jpg"
     ],
     "descricao": "Casa na rua dos Pavões com laje 368- Bairro Esplanada, contém nos fundos uma edícula."
+  },
+  {
+    "publicado": true,
+    "status": "Disponível",
+    "cod": "Cs002",
+    "titulo": "Casa a venda",
+    "negocio": "Venda",
+    "tipo": "Casa",
+    "cidade": "Chapadão do Sul",
+    "bairro": "Esplanada",
+    "preco": 450,
+    "quartos": 1,
+    "suites": 1,
+    "banheiros": 2,
+    "vagas": 2,
+    "financia": true,
+    "fotos": [
+      "/fotos/1000707750.jpg",
+      "/fotos/1000712374.jpg",
+      "/fotos/1000712375.jpg",
+      "/fotos/1000712378.jpg",
+      "/fotos/1000712379.jpg",
+      "/fotos/1000712381.jpg",
+      "/fotos/1000712397.jpg",
+      "/fotos/1000712406.jpg"
+    ],
+    "descricao": "Casa rua das Rendeiras no bairro Esplanada, contém energia solar, fica próximo da avenida Mato grosso do Sul."
   }
 ]
