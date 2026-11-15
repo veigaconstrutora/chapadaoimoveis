@@ -503,11 +503,13 @@ const EXEMPLOS = [
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
 const ytOk=u=>/^https:\/\/(www\.|m\.)?(youtube\.com|youtu\.be)\/[\w\-?=&\/.%]+$/.test(String(u||""));
 const fotoOk=u=>/^(\/fotos\/|https:\/\/)[^"'<>\s]+$/.test(String(u||""));
+const fixCod=v=>{const s=String(v||"").toUpperCase().replace(/[^A-Z0-9]/g,"");const m=s.match(/^([A-Z]{2})([A-Z0-9]+)$/);return m?m[1]+m[2].replace(/O/g,"0"):s;};
+const fixPreco=(v,neg)=>(neg!=="Aluguel"&&v>0&&v<10000)?v*1000:v; // "270" digitado = R$ 270 mil
 function normalizar(lista){
   const n=v=>{ const x=Number(String(v??"").replace(/\./g,"").replace(",",".")); return isFinite(x)?x:0; };
   return (Array.isArray(lista)?lista:[]).filter(i=>i && i.publicado!==false && i.titulo)
-    .map((i,k)=>({...i, cod:(String(i.cod||("IM"+String(k+1).padStart(3,"0"))).toUpperCase().replace(/[^A-Z0-9-]/g,""))||("IM"+(k+1)), video:ytOk(i.video)?i.video:"",
-      preco:n(i.preco), quartos:n(i.quartos), suites:n(i.suites), banheiros:n(i.banheiros), vagas:n(i.vagas),
+    .map((i,k)=>({...i, cod:fixCod(i.cod)||("IM"+String(k+1).padStart(3,"0")), video:ytOk(i.video)?i.video:"",
+      preco:fixPreco(n(i.preco),i.negocio), quartos:n(i.quartos), suites:n(i.suites), banheiros:n(i.banheiros), vagas:n(i.vagas),
       area:n(i.area), terreno:n(i.terreno), fotos:(Array.isArray(i.fotos)?i.fotos:[]).filter(fotoOk),
       negocio:i.negocio||"Venda", tipo:i.tipo||"Casa", status:i.status||"Disponível", bairro:i.bairro||"",
       cor:(k%6)+1 })).reverse();

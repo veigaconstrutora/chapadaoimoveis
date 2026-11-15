@@ -2,13 +2,13 @@
   {
     "publicado": true,
     "status": "Disponível",
-    "cod": "Cs001",
-    "titulo": "Casa a venda",
+    "cod": "CS001",
+    "titulo": "Casa 2 quartos com edícula no Esplanada",
     "negocio": "Venda",
     "tipo": "Casa",
     "cidade": "Chapadão do Sul",
     "bairro": "Esplanada",
-    "preco": 270,
+    "preco": 270000,
     "quartos": 2,
     "suites": 0,
     "banheiros": 2,
@@ -22,18 +22,18 @@
       "/fotos/1000832420.jpg",
       "/fotos/1000832417.jpg"
     ],
-    "descricao": "Casa na rua dos Pavões com laje 368- Bairro Esplanada, contém nos fundos uma edícula."
+    "descricao": "Casa com laje no bairro Esplanada, com edícula nos fundos."
   },
   {
     "publicado": true,
     "status": "Disponível",
-    "cod": "Cs002",
-    "titulo": "Casa a venda",
+    "cod": "CS002",
+    "titulo": "Casa com suíte e energia solar no Esplanada",
     "negocio": "Venda",
     "tipo": "Casa",
     "cidade": "Chapadão do Sul",
     "bairro": "Esplanada",
-    "preco": 450,
+    "preco": 450000,
     "quartos": 1,
     "suites": 1,
     "banheiros": 2,
@@ -49,18 +49,18 @@
       "/fotos/1000712397.jpg",
       "/fotos/1000712406.jpg"
     ],
-    "descricao": "Casa rua das Rendeiras no bairro Esplanada, contém energia solar, fica próximo da avenida Mato grosso do Sul."
+    "descricao": "Casa no bairro Esplanada, com energia solar, perto da Avenida Mato Grosso do Sul."
   },
   {
     "publicado": true,
     "status": "Disponível",
-    "cod": "CS O03 ",
-    "titulo": "Casa a venda ",
+    "cod": "CS003",
+    "titulo": "Casa 3 quartos com suíte no Sibipiruna",
     "negocio": "Venda",
     "tipo": "Casa",
     "cidade": "Chapadão do Sul",
-    "bairro": "Sibipiruna ",
-    "preco": 220,
+    "bairro": "Sibipiruna",
+    "preco": 220000,
     "quartos": 3,
     "suites": 1,
     "banheiros": 2,
@@ -70,6 +70,6 @@
       "/fotos/1000507698.jpg",
       "/fotos/1000510213.jpg"
     ],
-    "descricao": "Casa localizada na rua Pato branco."
+    "descricao": "Casa de 3 quartos, sendo 1 suíte, no bairro Sibipiruna."
   }
 ]

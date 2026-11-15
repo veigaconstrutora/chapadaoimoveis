@@ -132,6 +132,8 @@
 const PADRAO={whatsapp:"5567996936202",creci:"14735"};
 const EXEMPLOS=[{cod:"CS001",titulo:"Casa 3 quartos com suíte e área gourmet",cidade:"Chapadão do Sul",bairro:"Jardim Paraíso",negocio:"Venda",tipo:"Casa",preco:420000,quartos:3,suites:1,banheiros:2,vagas:2,area:180,financia:true,fotos:[],status:"Disponível",descricao:"Casa ampla com sala integrada, cozinha planejada e área gourmet com churrasqueira."},
  {cod:"CR001",titulo:"Casa 2 quartos, ideal para Minha Casa Minha Vida",cidade:"Costa Rica",bairro:"Centro",negocio:"Venda",tipo:"Casa",preco:235000,quartos:2,banheiros:1,vagas:1,area:62,financia:true,fotos:[],status:"Vendido",descricao:"Casa nova, pronta para morar."}];
+const fixCod=v=>{const s=String(v||"").toUpperCase().replace(/[^A-Z0-9]/g,"");const m=s.match(/^([A-Z]{2})([A-Z0-9]+)$/);return m?m[1]+m[2].replace(/O/g,"0"):s;};
+const fixPreco=(v,neg)=>(neg!=="Aluguel"&&v>0&&v<10000)?v*1000:v; // "270" digitado = R$ 270 mil
 const fotoOk=u=>/^\/fotos\/[^"'<>\s]+$/.test(String(u||""));
 const brl=v=>Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
 const $=id=>document.getElementById(id);
@@ -145,7 +147,7 @@ async function carregar(){
   try{
     const [c,i]=await Promise.all(["dados/config.json","dados/imoveis.json"].map(u=>fetch(u,{cache:"no-store"}).then(r=>{if(!r.ok)throw 0;return r.json();})));
     CFG={...PADRAO,...c};
-    LISTA=(Array.isArray(i)?i:[]).filter(x=>x&&x.titulo&&x.publicado!==false).map(x=>({...x,cod:String(x.cod||"").toUpperCase().replace(/[^A-Z0-9-]/g,""),fotos:(x.fotos||[]).filter(fotoOk)})).reverse();
+    LISTA=(Array.isArray(i)?i:[]).filter(x=>x&&x.titulo&&x.publicado!==false).map(x=>({...x,cod:fixCod(x.cod),preco:fixPreco(Number(x.preco)||0,x.negocio),titulo:String(x.titulo).trim(),bairro:String(x.bairro||"").trim(),fotos:(x.fotos||[]).filter(fotoOk)})).reverse();
   }catch(e){ LISTA=EXEMPLOS; }
   const sel=$("escolha");
   sel.innerHTML='<option value="__capt">Captação: "Quer vender seu imóvel?"</option>'+LISTA.map((x,k)=>`<option value="${k}">${x.cod} · ${String(x.titulo).replace(/[<>&"]/g,"")}</option>`).join("");

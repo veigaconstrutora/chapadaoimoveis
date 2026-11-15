@@ -25,10 +25,12 @@ content:
           values: [Disponível, Reservado, Vendido, Alugado]
       - name: cod
         label: Código (ex. CS001, CR001, PA001, FG001)
+        description: "Letras da cidade + 3 números, sem espaço. Use o número zero, não a letra O. Veja o último código da lista e siga a sequência."
         type: string
         required: true
       - name: titulo
         label: Título do anúncio
+        description: "Tipo + quartos + o melhor do imóvel + bairro. Ex.: Casa 3 quartos com suíte no Esplanada. Não use só 'Casa a venda'."
         type: string
         required: true
       - name: negocio
@@ -51,9 +53,11 @@ content:
           values: [Chapadão do Sul, Costa Rica, Paraíso das Águas, Figueirão]
       - name: bairro
         label: Bairro
+        description: "Só o nome do bairro. Nunca escreva a rua nem o número da casa."
         type: string
       - name: preco
-        label: Preço em reais (só números; aluguel = valor por mês)
+        label: Preço COMPLETO em reais (ex. 270000)
+        description: "Digite o valor inteiro, só números: 270000 para R$ 270 mil. Não digite 270. Aluguel: valor do mês, ex. 1500."
         type: number
         required: true
       - name: quartos
@@ -80,6 +84,7 @@ content:
         default: true
       - name: fotos
         label: Fotos (a primeira é a capa)
+        description: "De 12 a 25 fotos, com o celular deitado. Capa = fachada. Sem placas de outras imobiliárias e sem prints de vídeo."
         type: image
         list:
           max: 25
@@ -88,6 +93,7 @@ content:
         type: string
       - name: descricao
         label: Descrição
+        description: "3 a 6 linhas: destaque, ambientes, perto de quê, documentação e financiamento. Não escreva o nome da rua nem o número da casa."
         type: text
 
   - name: config
