@@ -106,6 +106,9 @@ content:
         label: WhatsApp de atendimento (com 55 e DDD, só números)
         type: string
         required: true
+      - name: whatsapp_construtora
+        label: WhatsApp da construtora (construção e simulações de obra)
+        type: string
       - name: creci
         label: Número do CRECI
         type: string

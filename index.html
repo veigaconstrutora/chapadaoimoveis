@@ -406,7 +406,7 @@
     <div>
       <h2>Não achou o que procura? A gente constrói.</h2>
       <p>Com a construtora Marcio dos Santos Veiga Ltda, você tem um único responsável do terreno à entrega das chaves, inclusive pelo Minha Casa, Minha Vida.</p>
-      <a class="btn btn-zap zap-link" data-msg="Olá Marcio! Tenho interesse em construir uma casa." href="#" target="_blank" rel="noopener">Quero construir</a>
+      <a class="btn btn-zap zap-link" data-construtora="1" data-msg="Olá! Tenho interesse em construir uma casa." href="#" target="_blank" rel="noopener">Quero construir</a>
     </div>
     <div class="lista">
       <div class="item"><div class="item-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f4d3a" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></div><div><b>Projeto sob medida</b><span>Planta pensada para o seu terreno e o seu orçamento.</span></div></div>
@@ -541,6 +541,7 @@ carregarDados().then(d=>iniciarSite(d.cfg,d.lista));
 
 function iniciarSite(CFG,LISTA){
 const WHATSAPP = String(CFG.whatsapp||"").replace(/\D/g,"");
+const ZAP_CONSTRUTORA = String(CFG.whatsapp_construtora||"").replace(/\D/g,"") || WHATSAPP; // construção e simulações de obra
 const CRECI = CFG.creci||"";
 const MODO_CAPTACAO = CFG.modo_captacao!==false;
 const VIDEO_VSL = ytOk(CFG.video_vsl)?CFG.video_vsl:"";
@@ -551,11 +552,12 @@ const IMOVEIS = LISTA;
    ============================================================ */
 const $ = id => document.getElementById(id);
 const zap = msg => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+const zapC = msg => `https://wa.me/${ZAP_CONSTRUTORA}?text=${encodeURIComponent(msg)}`;
 const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
 const num = s => Number(String(s).replace(/\./g,"").replace(",",".").replace(/[^\d.]/g,"")) || 0;
 const site = "chapadaoimoveis.com.br";
 
-document.querySelectorAll(".zap-link").forEach(a => a.href = zap(a.dataset.msg));
+document.querySelectorAll(".zap-link").forEach(a => a.href = a.dataset.construtora ? zapC(a.dataset.msg) : zap(a.dataset.msg));
 document.querySelectorAll(".creci-num").forEach(s => s.textContent = CRECI);
 $("ano").textContent = new Date().getFullYear();
 
@@ -814,7 +816,7 @@ function simular(){
   const texto=[`Olá! Fiz a simulação no site chapadaoimoveis.com.br e quero a simulação oficial.`,"",
     `Procura: ${$("sTipo").selectedOptions[0].text}`,`Renda bruta: ${ROT_RENDA[faixa]}`,`Idade do mais velho: ${idTxt?idTxt+" anos":"não informada"}`,
     `3 anos de FGTS: ${sn[fgts]}`,`Casa própria na cidade: ${sn[casa]}`,`Outras parcelas: ${sn[outras]}`,"",resumo].join("\n");
-  $("simZap").href=zap(texto);
+  $("simZap").href=(tipo==="pronta"?zap:zapC)(texto);
 }
 $("sTermo").textContent=`Simulação, não aprovação de crédito. Valores pela tabela PRICE, com seguros e tarifa, sem descontos do governo, pelas regras do MCMV (FGTS) ou da linha SBPE da CAIXA vigentes em ${PARAM.vigencia}. Como a renda é informada por faixa, os valores aparecem de/até. O valor final depende da avaliação do imóvel e da análise de crédito.`;
 ["sTipo","sRenda","sFgts","sCasa","sOutras"].forEach(id=>$(id).addEventListener("change",simular));
@@ -943,7 +945,7 @@ function finalizar(){
   const texto=`Olá Marcio! Sou ${resp.nome}. Vim pelo site chapadaoimoveis.com.br.\n*${fluxo.titulo}*\n${linhas.join("\n")}`;
   botDiz(`Obrigado${nome?", "+nome:""}! ${fluxo.fim}`,()=>{
     addOpcoes([
-      ["Enviar para o Marcio no WhatsApp",()=>{ window.open(zap(texto),"_blank"); addMsg("Enviar para o Marcio no WhatsApp","eu"); botDiz("Pronto! É só tocar em enviar no WhatsApp. Posso ajudar com mais alguma coisa?",()=>addOpcoes([["Voltar ao início",menu]])); },"btn-zap"],
+      ["Enviar para o Marcio no WhatsApp",()=>{ window.open((fluxo===FLUXOS.construir?zapC:zap)(texto),"_blank"); addMsg("Enviar para o Marcio no WhatsApp","eu"); botDiz("Pronto! É só tocar em enviar no WhatsApp. Posso ajudar com mais alguma coisa?",()=>addOpcoes([["Voltar ao início",menu]])); },"btn-zap"],
       ["Recomeçar",menu]
     ]);
   });
