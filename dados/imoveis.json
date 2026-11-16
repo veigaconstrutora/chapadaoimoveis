@@ -97,7 +97,7 @@
     "tipo": "Casa",
     "cidade": "Chapadão do Sul",
     "bairro": "Espatodia",
-    "preco": 2200000,
+    "preco": 220000,
     "quartos": 3,
     "banheiros": 1,
     "vagas": 2,
@@ -130,5 +130,17 @@
       "/fotos/whatsapp-image-2026-11-16-at-151255-2.jpeg"
     ],
     "descricao": "casas na avenida goias uma na frente e outra nos fundos separadas com murro, proximo ao supermercado DOSUL"
+  },
+  {
+    "publicado": true,
+    "status": "Disponível",
+    "cod": "CS007",
+    "titulo": "TERRENO A VENDA",
+    "negocio": "Venda",
+    "tipo": "Terreno",
+    "cidade": "Chapadão do Sul",
+    "bairro": "FLAMBOYANT",
+    "preco": 450000,
+    "financia": true
   }
 ]
