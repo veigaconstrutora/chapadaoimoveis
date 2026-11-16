@@ -87,5 +87,25 @@
       "/fotos/whatsapp-image-2026-11-16-at-151254.jpeg"
     ],
     "descricao": "Ótima localização Rua Pará próximo a avenida Mato grosso do Sul."
+  },
+  {
+    "publicado": true,
+    "status": "Alugado",
+    "cod": "CS005",
+    "titulo": "casa a venda",
+    "negocio": "Venda",
+    "tipo": "Casa",
+    "cidade": "Chapadão do Sul",
+    "bairro": "Espatodia",
+    "preco": 2200000,
+    "quartos": 3,
+    "banheiros": 1,
+    "vagas": 2,
+    "financia": true,
+    "fotos": [
+      "/fotos/whatsapp-image-2026-11-16-at-151254-2-1.jpeg",
+      "/fotos/whatsapp-image-2026-11-16-at-151255.jpeg"
+    ],
+    "descricao": "Casa na rua Campo grande, esta alugada, aceita proposta"
   }
 ]
