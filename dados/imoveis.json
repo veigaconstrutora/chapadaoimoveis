@@ -130,5 +130,22 @@
       "/fotos/whatsapp-image-2026-11-16-at-151255-2.jpeg"
     ],
     "descricao": "casas na avenida goias uma na frente e outra nos fundos separadas com murro, proximo ao supermercado DOSUL"
+  },
+  {
+    "publicado": true,
+    "status": "Disponível",
+    "cod": "CS007",
+    "titulo": "TERRENO A VENDA",
+    "negocio": "Venda",
+    "tipo": "Terreno",
+    "cidade": "Chapadão do Sul",
+    "bairro": "FLAMBOYANT",
+    "preco": 450000,
+    "terreno": 525,
+    "financia": true,
+    "fotos": [
+      "/fotos/whatsapp-image-2026-11-16-at-151256-1-1.jpeg"
+    ],
+    "descricao": "TERRENO NA AVENIDA GOIAS MURRADO, PROXIMO AO RESINTO DA EXPOSUL."
   }
 ]
