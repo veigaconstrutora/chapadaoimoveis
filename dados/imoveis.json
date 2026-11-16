@@ -67,9 +67,25 @@
     "vagas": 1,
     "financia": true,
     "fotos": [
-      "/fotos/1000507698.jpg",
-      "/fotos/1000510213.jpg"
+      "/fotos/1000507698.jpg"
     ],
     "descricao": "Casa de 3 quartos, sendo 1 suíte, no bairro Sibipiruna."
+  },
+  {
+    "publicado": true,
+    "status": "Disponível",
+    "cod": "CS004",
+    "titulo": "Vende se terreno ",
+    "negocio": "Venda",
+    "tipo": "Terreno",
+    "cidade": "Chapadão do Sul",
+    "bairro": "Flamboyant ",
+    "preco": 260000,
+    "terreno": 600,
+    "financia": true,
+    "fotos": [
+      "/fotos/1000847428.jpg"
+    ],
+    "descricao": "Ótima localização Rua Pará próximo a avenida Mato grosso do Sul."
   }
 ]
