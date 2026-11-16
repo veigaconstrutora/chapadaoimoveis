@@ -196,7 +196,7 @@ function arteImovel(ctx,W,H,im,imgs,story){
   let y=y0+(story?130:110);
   ctx.fillStyle="#E9A93E";ctx.font=`700 ${story?104:92}px ${F.sora}`;ctx.fillText(brl(im.preco)+(im.negocio==="Aluguel"?"/mês":""),64,y);
   if(estilo==="familia"&&im.negocio!=="Aluguel"&&im.financia&&!(im.status&&im.status!=="Disponível")){
-    ctx.font=`700 ${story?40:34}px ${F.man}`;ctx.fillStyle="#7EE2A8";ctx.fillText(`Parcelas estimadas a partir de ${brl(parcelaEstimada(im.preco))}/mês (simulação)`,64,y+(story?58:50));y+=story?58:50;
+    ctx.font=`700 ${story?40:34}px ${F.man}`;ctx.fillStyle="#7EE2A8";ctx.fillText("Aceita financiamento e FGTS · simule no site",64,y+(story?58:50));y+=story?58:50;
   }
   y+=story?80:66;ctx.fillStyle="#fff";ctx.font=`700 ${story?50:44}px ${F.man}`;
   for(const l of quebrar(ctx,im.titulo,W-128).slice(0,2)){ctx.fillText(l,64,y);y+=story?64:56;}
@@ -258,8 +258,8 @@ function copyImovel(im){
   if(estilo==="curta") return `${chamadaSelo?chamadaSelo+" ":""}🏡 ${im.titulo}\n📍 ${local} · 💰 ${preco}\n👉 ${link}`;
   if(estilo==="familia"){
     if(im.negocio==="Aluguel") return `${topo}Um lar pronto para a sua família começar uma nova fase. 🏡\n\n${im.titulo}, em ${local}.\n${det?"✅ "+det+"\n":""}💰 ${preco}\n\nVenha conhecer! Agende sua visita pelo WhatsApp (67) 99693-6202.\n🔎 Fotos e detalhes: ${link}\n\n${assin}\n\n${tags} #aluguel #lardocelar`;
-    const p=im.financia?`\n\n💚 Aceita financiamento${im.financia?" e FGTS":""}. Parcelas estimadas a partir de ${brl(parcelaEstimada(im.preco))} por mês*.\nFaço a sua simulação oficial de graça.`:"";
-    return `${topo}Sair do aluguel e ter a casa própria é possível. 🏡💚\n\n${im.titulo}, em ${local}.\n${det?"✅ "+det+"\n":""}💰 ${preco}${p}\n\n📲 Chame no WhatsApp (67) 99693-6202\n🔎 Fotos e detalhes: ${link}\n\n${im.financia?"*Simulação com 20% de entrada, 30 anos, tabela SAC. Sujeita a análise de crédito.\n\n":""}${assin}\n\n${tags} #minhacasaminhavida #casapropria #saiadoaluguel`;
+    const p=im.financia?`\n\n💚 Aceita financiamento e FGTS.\nVeja em 1 minuto quanto você consegue financiar: chapadaoimoveis.com.br/#simulador\nE a simulação oficial é por nossa conta.`:"";
+    return `${topo}Sair do aluguel e ter a casa própria é possível. 🏡💚\n\n${im.titulo}, em ${local}.\n${det?"✅ "+det+"\n":""}💰 ${preco}${p}\n\n📲 Chame no WhatsApp (67) 99693-6202\n🔎 Fotos e detalhes: ${link}\n\n${assin}\n\n${tags} #minhacasaminhavida #casapropria #saiadoaluguel`;
   }
   if(estilo==="investidor"){
     const m2=im.area&&im.negocio!=="Aluguel"?` · ${brl(im.preco/im.area)} por m²`:"";

@@ -188,6 +188,13 @@
   .sim-res dl{display:grid;grid-template-columns:1fr auto;gap:8px 12px;margin:18px 0;font-size:14px}
   .sim-res dt{color:rgba(255,255,255,.75)} .sim-res dd{font-weight:600;text-align:right}
   .aviso{font-size:12px;color:rgba(255,255,255,.7);margin-bottom:16px}
+  .sim-caixa select{border:1px solid var(--linha);border-radius:10px;height:46px;padding:0 10px;font:600 15px Inter,sans-serif;color:var(--texto);background:#fff;width:100%}
+  .sim-caixa input{width:100%}
+  .sim-res .rot{font-size:14px;color:rgba(255,255,255,.75)}
+  .sim-bloco{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:12px 14px;margin:0 0 12px;font-size:14px;line-height:1.45}
+  .sim-bloco b{color:var(--ouro)}
+  .sim-avisos div{font-size:13px;color:rgba(255,255,255,.85);border-left:3px solid var(--ouro);padding:2px 0 2px 10px;margin:0 0 8px}
+  .sim-termo{font-size:11.5px;color:var(--suave);margin-top:14px;line-height:1.45}
   @media(max-width:860px){.sim-grade{grid-template-columns:1fr}}
 
   .construtora{background:var(--ouro-claro)}
@@ -356,31 +363,39 @@
 
 <section class="sim" id="simulador">
   <div class="wrap">
-    <div class="titulo-sec"><div><h2>Simule seu financiamento</h2><p>Descubra em segundos quanto fica a parcela e a renda que o banco costuma pedir.</p></div></div>
+    <div class="titulo-sec"><div><h2>Quanto você consegue financiar?</h2><p>Responda 6 perguntas e veja o valor, a parcela e o prazo pelas regras do Minha Casa Minha Vida e da CAIXA.</p></div></div>
     <div class="sim-grade">
       <div class="sim-caixa">
-        <label>Valor do imóvel (R$)<input id="sValor" inputmode="numeric" value="250.000"></label>
+        <label>O que você quer fazer?
+          <select id="sTipo"><option value="financiado">Comprar terreno e construir (tudo financiado)</option><option value="quitado">Construir no meu terreno quitado</option><option value="pronta">Comprar casa pronta (nova ou usada)</option></select></label>
+        <label>Renda bruta da família (somando quem vai financiar)
+          <select id="sRenda"><option value="1">Até R$ 2.160</option><option value="2">R$ 2.161 a R$ 2.850</option><option value="3">R$ 2.851 a R$ 3.200</option><option value="4">R$ 3.201 a R$ 3.500</option><option value="5">R$ 3.501 a R$ 4.000</option><option value="6" selected>R$ 4.001 a R$ 5.000</option><option value="7">R$ 5.001 a R$ 9.600</option><option value="8">R$ 9.601 a R$ 13.000</option><option value="9">Acima de R$ 13.000</option></select></label>
         <div class="sim-linha">
-          <label>Entrada (R$)<input id="sEntrada" inputmode="numeric" value="50.000"></label>
-          <label>Prazo (anos)<input id="sPrazo" inputmode="numeric" value="30"></label>
+          <label>Idade de quem é mais velho<input id="sIdade" inputmode="numeric" placeholder="Ex.: 35" maxlength="3"></label>
+          <label>Tem 3 anos de FGTS?<select id="sFgts"><option value="s">Sim</option><option value="n">Não</option><option value="x" selected>Não sei</option></select></label>
         </div>
-        <label>Juros ao ano (%)<input id="sJuros" inputmode="decimal" value="10,5"></label>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="chip" data-juros="5">MCMV faixa menor ~5%</button>
-          <button class="chip" data-juros="8">MCMV faixa maior ~8%</button>
-          <button class="chip" data-juros="11,5">Banco tradicional ~11,5%</button>
+        <div class="sim-linha">
+          <label>Já tem casa própria na cidade?<select id="sCasa"><option value="n">Não</option><option value="s">Sim</option></select></label>
+          <label>Paga outra parcela (carro, empréstimo)?<select id="sOutras"><option value="n">Não</option><option value="s">Sim</option></select></label>
         </div>
+        <p class="sim-termo" id="sTermo"></p>
       </div>
       <div class="sim-res">
-        <div style="font-size:14px;color:rgba(255,255,255,.75)">Primeira parcela estimada</div>
-        <div class="big" id="rParcela">R$ 0</div>
-        <dl>
-          <dt>Valor financiado</dt><dd id="rFin">-</dd>
-          <dt>Última parcela (aprox.)</dt><dd id="rUlt">-</dd>
-          <dt>Renda familiar sugerida</dt><dd id="rRenda">-</dd>
-        </dl>
-        <div class="aviso">Estimativa pela tabela SAC (a mais usada pela Caixa), sem seguros e taxas. Os valores reais dependem do banco, do programa e da análise de crédito.</div>
-        <a class="btn btn-zap" id="simZap" href="#" target="_blank" rel="noopener" style="width:100%">Quero uma simulação oficial</a>
+        <div id="sOk">
+          <div class="rot">Com a sua renda, você pode financiar até</div>
+          <div class="big" id="rFin">-</div>
+          <dl>
+            <dt id="lParcela">Parcela</dt><dd id="rParcela">-</dd>
+            <dt id="lImovel">Imóvel que cabe no seu perfil</dt><dd id="rImovel">-</dd>
+            <dt>Prazo</dt><dd id="rPrazo">-</dd>
+            <dt>Juros ao ano</dt><dd id="rTaxa">-</dd>
+          </dl>
+          <div class="sim-bloco" id="cObra"><strong>Durante a obra</strong><br>Você paga só os juros do que já foi liberado: a parcela começa em <b id="rObraIni"></b> e chega a <b id="rObraFim"></b> quando a casa fica pronta.</div>
+        </div>
+        <div class="sim-bloco" id="cIdade" hidden><strong>Pela idade de quem é mais velho, o prazo fica curto demais.</strong><br>Incluir alguém mais novo no financiamento, como o cônjuge ou um filho, pode resolver. Fale com a gente que mostramos a opção para o seu caso.</div>
+        <div class="sim-bloco" id="cPronta" hidden><strong>Se preferir uma casa pronta</strong><br>Sem fase de obra, a parcela cheia começa no primeiro mês: <b id="rProntaParc"></b> em até <b id="rProntaPrazo"></b>.</div>
+        <div class="sim-avisos" id="rAvisos"></div>
+        <a class="btn btn-zap" id="simZap" href="#" target="_blank" rel="noopener" style="width:100%">Quero a simulação oficial</a>
       </div>
     </div>
   </div>
@@ -685,8 +700,7 @@ function abrir(cod){
   const msgVisita=`Olá Marcio! Gostaria de agendar uma visita ao imóvel ${im.cod} (${im.titulo}). Qual o melhor dia?`;
   let parcela="";
   if(im.negocio==="Venda"&&im.financia){
-    const s=sac(im.preco,im.preco*0.2,30,10.5);
-    parcela=`<div class="det-parcela">Financiando 80% em 30 anos, a primeira parcela fica em torno de <b>${brl(s.primeira)}</b>. <a href="#simulador" data-sim="${im.preco}" style="text-decoration:underline">Simular com meus valores</a></div>`;
+    parcela=`<div class="det-parcela">Aceita financiamento. <a href="#simulador" data-sim="1" style="text-decoration:underline;font-weight:700">Veja quanto você consegue financiar</a></div>`;
   }
   $("modalIn").innerHTML=`
     <button class="fechar" aria-label="Fechar" onclick="fechar()">×</button>
@@ -713,7 +727,7 @@ function abrir(cod){
       <button class="btn btn-contorno" onclick="alternarFav('${im.cod}');abrir('${im.cod.toLowerCase()}')">${favs.includes(im.cod)?"♥ Salvo nos favoritos":"♡ Salvar nos favoritos"}</button>
     </div>`;
   $("modalIn").querySelector("[data-sim]")?.addEventListener("click",ev=>{
-    const v=+ev.target.dataset.sim; $("sValor").value=v.toLocaleString("pt-BR"); $("sEntrada").value=Math.round(v*0.2).toLocaleString("pt-BR"); simular();
+    $("sTipo").value="pronta"; simular();
     ev.preventDefault(); history.replaceState(null,"",location.pathname); $("modal").classList.remove("aberto"); document.body.classList.remove("travado"); $("simulador").scrollIntoView();
   });
   $("modal").classList.add("aberto"); document.body.classList.add("travado"); $("modalIn").scrollTop=0;
@@ -732,15 +746,79 @@ document.addEventListener("keydown",e=>{ if(e.key==="Escape") fechar(); });
 function rota(){ const h=location.hash.slice(1); if(h.startsWith("imovel-")) abrir(h.slice(7)); else if($("modal").classList.contains("aberto")) { $("modal").classList.remove("aberto"); document.body.classList.remove("travado"); } }
 window.addEventListener("hashchange",rota);
 
-/* Simulador */
-function simular(){
-  const v=num($("sValor").value), e=num($("sEntrada").value), a=num($("sPrazo").value)||30, j=num($("sJuros").value);
-  const r=sac(v,e,Math.min(a,35),j);
-  $("rParcela").textContent=brl(r.primeira); $("rFin").textContent=brl(r.fin); $("rUlt").textContent=brl(r.ultima); $("rRenda").textContent=brl(r.renda);
-  $("simZap").href=zap(`Olá Marcio! Fiz a simulação no site: imóvel de ${brl(v)}, entrada de ${brl(e)}, ${a} anos. Parcela estimada de ${brl(r.primeira)}. Pode fazer uma simulação oficial para mim?`);
+/* Simulador: mesmo cálculo do simulador MCMV da construtora (veigaconstrutora.github.io/simulador-mcmv).
+   Parâmetros calibrados com simulações oficiais da CAIXA. Revisar quando a regra mudar. Sem descontos do governo. */
+const PARAM = {
+  vigencia: "outubro de 2026",
+  teto: { mcmv12: 210000, f3: 400000, f4: 600000 },
+  cota: 0.80, comprometimento: 0.30, comprometimentoCaixa: 0.232, comprometimentoIdade2: 0.0000088,
+  prazoMax: 420, idadeLimiteMeses: 80 * 12 + 5, prazoObraMeses: 12,
+  tarifaAdm: 25, rendaIsentaTarifa: 2850,
+  mip: 0.0000849, mipCrescAno: 1.0758, dfiAte2850: 0.000135, dfiAcima: 0.0000711,
+  faixas: [null,[1621,2160,4.75,4.25],[2160.01,2850,5.00,4.50],[2850.01,3200,5.25,4.75],[3200.01,3500,5.50,5.00],[3500.01,4000,6.00,5.50],[4000.01,5000,7.00,6.50],[5000.01,9600,8.16,7.66],[9600.01,13000,9.16,8.66],[13000.01,13000.01,12.5,12.5]],
+  sbpe: { taxa: 12.5, cota: 0.70, teto: 2250000 }
+};
+const ROT_RENDA=["","até R$ 2.160","R$ 2.161 a 2.850","R$ 2.851 a 3.200","R$ 3.201 a 3.500","R$ 3.501 a 4.000","R$ 4.001 a 5.000","R$ 5.001 a 9.600","R$ 9.601 a 13.000","acima de R$ 13.000"];
+const pct=v=>v.toFixed(2).replace(".",",")+"%";
+function capacidade(renda,taxa,prazo,teto,idadeAnos,sbpe){
+  const cota=sbpe?PARAM.sbpe.cota:PARAM.cota;
+  const mip=PARAM.mip*Math.pow(PARAM.mipCrescAno,idadeAnos-30.75);
+  const i=taxa/100/12, fator=i/(1-Math.pow(1+i,-prazo));
+  const tarifa=!sbpe&&renda<=PARAM.rendaIsentaTarifa?0:PARAM.tarifaAdm;
+  const dfi=!sbpe&&renda<=PARAM.rendaIsentaTarifa?PARAM.dfiAte2850:PARAM.dfiAcima;
+  const encargoMax=Math.max(0,Math.min(PARAM.comprometimentoCaixa+Math.pow(Math.max(0,idadeAnos-31),2)*PARAM.comprometimentoIdade2,PARAM.comprometimento)*renda);
+  let fin=0;
+  for(let k=0;k<20;k++){const imovel=Math.min(fin/cota,teto);fin=Math.max(0,Math.min((encargoMax-tarifa-dfi*imovel)/(fator+mip),cota*teto));}
+  const imovel=Math.min(fin/cota,teto), seguros=x=>x*mip+dfi*imovel;
+  return {fin,imovel,parcela:fin*fator+seguros(fin)+tarifa,obraIni:fin*0.25*i+seguros(fin*0.25)+tarifa,obraFim:fin*i+seguros(fin)+tarifa};
 }
-["sValor","sEntrada","sPrazo","sJuros"].forEach(id=>$(id).addEventListener("input",simular));
-document.querySelectorAll("[data-juros]").forEach(b=>b.onclick=()=>{$("sJuros").value=b.dataset.juros;simular();});
+function simular(){
+  const tipo=$("sTipo").value, faixa=+$("sRenda").value, fgts=$("sFgts").value, casa=$("sCasa").value, outras=$("sOutras").value;
+  const pronta=tipo==="pronta", sbpe=faixa===9||casa==="s";
+  const [de,ate,tNao,tSim]=PARAM.faixas[faixa];
+  const taxa=sbpe?PARAM.sbpe.taxa:fgts==="s"?tSim:tNao;
+  const teto=sbpe?PARAM.sbpe.teto:faixa<=6?PARAM.teto.mcmv12:faixa===7?PARAM.teto.f3:PARAM.teto.f4;
+  const avisos=[]; const idTxt=String($("sIdade").value).replace(/\D/g,""); let idade;
+  if(/^\d{2,3}$/.test(idTxt)&&+idTxt>=18&&+idTxt<=100) idade=+idTxt*12+6;
+  else { idade=44*12; avisos.push(idTxt?"Idade inválida: a conta usou o prazo máximo.":"Sem a idade, a conta usou o prazo máximo. Informe a idade para um valor mais certo."); }
+  const prazoPronta=Math.min(PARAM.prazoMax,PARAM.idadeLimiteMeses-idade);
+  const prazo=pronta?prazoPronta:Math.min(PARAM.prazoMax,PARAM.idadeLimiteMeses-idade-PARAM.prazoObraMeses);
+  const deAte=(a,b)=>Math.round(a)===Math.round(b)?brl(a):`${brl(a)} a ${brl(b)}`;
+  const curto=prazo<60;
+  $("sOk").hidden=curto; $("cIdade").hidden=!curto; $("cPronta").hidden=true; $("cObra").hidden=pronta||curto;
+  let resumo="";
+  if(curto){
+    if(!pronta&&prazoPronta>=60){const pb=capacidade(de,taxa,prazoPronta,teto,idade/12,sbpe),pa=capacidade(ate,taxa,prazoPronta,teto,idade/12,sbpe);$("cPronta").hidden=false;$("rProntaParc").textContent=deAte(pb.parcela,pa.parcela);$("rProntaPrazo").textContent=`${prazoPronta} meses`;}
+    resumo="Simulação: prazo curto pela idade (ver outras opções)";
+  } else {
+    const b=capacidade(de,taxa,prazo,teto,idade/12,sbpe), a=capacidade(ate,taxa,prazo,teto,idade/12,sbpe);
+    $("rFin").textContent=brl(a.fin); $("rParcela").textContent=deAte(b.parcela,a.parcela);
+    $("rImovel").textContent=`até ${brl(a.imovel)}`; $("rPrazo").textContent=`${prazo} meses`;
+    $("rTaxa").textContent=`${pct(taxa)} (efetiva ${pct((Math.pow(1+taxa/1200,12)-1)*100)})`;
+    $("lParcela").textContent=pronta?"Parcela desde o primeiro mês":"Parcela depois da casa pronta";
+    $("lImovel").textContent=pronta?"Casa que cabe no seu perfil":"Terreno + casa que cabem no seu perfil";
+    $("rObraIni").textContent=brl(a.obraIni); $("rObraFim").textContent=brl(a.obraFim);
+    if(b.fin<a.fin-1) avisos.push(`O valor depende de onde a renda fica dentro da faixa: de ${brl(b.fin)} a ${brl(a.fin)}.`);
+    if(prazo<PARAM.prazoMax) avisos.push("Pela idade, o prazo fica menor. Incluir alguém mais novo no financiamento pode aumentar o prazo.");
+    if(sbpe) avisos.push("Pelo seu perfil, o financiamento é por outra linha da CAIXA (fora do MCMV): juros de 10% a 15% ao ano conforme o relacionamento com o banco. A conta usa 12,5% e financiamento de até 70% do imóvel.");
+    if(faixa===9) avisos.push("Para renda acima de R$ 13 mil, a conta usa R$ 13 mil: com renda maior, o valor sobe.");
+    if(!pronta){const pb=capacidade(de,taxa,prazoPronta,teto,idade/12,sbpe),pa=capacidade(ate,taxa,prazoPronta,teto,idade/12,sbpe);$("cPronta").hidden=false;$("rProntaParc").textContent=deAte(pb.parcela,pa.parcela);$("rProntaPrazo").textContent=`${prazoPronta} meses`;}
+    if(tipo==="financiado") avisos.push("A CAIXA pode incluir o terreno no mesmo financiamento, se aprovar. Os juros sobre a parte do terreno começam no primeiro mês.");
+    if(tipo==="quitado") avisos.push("Com o terreno quitado, o valor dele entra na avaliação do imóvel junto com a construção.");
+    if(pronta) avisos.push("Casa pronta há mais de 6 meses segue a regra de imóvel usado: a CAIXA financia até 80%, depois da avaliação de engenharia e com a documentação em dia.");
+    resumo=`Simulação: financia até ${brl(a.fin)}\nParcela: ${deAte(b.parcela,a.parcela)} · Prazo: ${prazo} meses · Juros: ${pct(taxa)}`;
+  }
+  if(outras==="s") avisos.push("As parcelas que você já paga entram na conta da CAIXA: todas juntas, com a da casa, não passam de 30% da renda. A gente confere com você.");
+  $("rAvisos").innerHTML=avisos.map(t=>`<div>${esc(t)}</div>`).join("");
+  const sn={s:"sim",n:"não",x:"não sabe"};
+  const texto=[`Olá! Fiz a simulação no site chapadaoimoveis.com.br e quero a simulação oficial.`,"",
+    `Procura: ${$("sTipo").selectedOptions[0].text}`,`Renda bruta: ${ROT_RENDA[faixa]}`,`Idade do mais velho: ${idTxt?idTxt+" anos":"não informada"}`,
+    `3 anos de FGTS: ${sn[fgts]}`,`Casa própria na cidade: ${sn[casa]}`,`Outras parcelas: ${sn[outras]}`,"",resumo].join("\n");
+  $("simZap").href=zap(texto);
+}
+$("sTermo").textContent=`Simulação, não aprovação de crédito. Valores pela tabela PRICE, com seguros e tarifa, sem descontos do governo, pelas regras do MCMV (FGTS) ou da linha SBPE da CAIXA vigentes em ${PARAM.vigencia}. Como a renda é informada por faixa, os valores aparecem de/até. O valor final depende da avaliação do imóvel e da análise de crédito.`;
+["sTipo","sRenda","sFgts","sCasa","sOutras"].forEach(id=>$(id).addEventListener("change",simular));
+$("sIdade").addEventListener("input",simular);
 simular();
 
 /* Formulários que viram mensagem no WhatsApp */
