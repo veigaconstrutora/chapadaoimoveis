@@ -4,3 +4,4 @@ Disallow: /.pages.yml
 Disallow: /post.html
 Disallow: /guia-corretor.pdf
 Sitemap: https://chapadaoimoveis.com.br/sitemap.xml
+Disallow: /campanha/
