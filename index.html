@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chapadão Imóveis · Marcio Veiga</title>
 <meta name="description" content="Casas, terrenos e apartamentos em Chapadão do Sul, Costa Rica, Paraíso das Águas e Figueirão. Corretor Marcio Veiga, CRECI-MS 14735. Simulação de financiamento e MCMV.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.workers.dev; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="canonical" href="https://chapadaoimoveis.com.br/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -552,6 +552,7 @@ const IMOVEIS = LISTA;
    ============================================================ */
 const $ = id => document.getElementById(id);
 const zap = msg => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+const IA_URL = /^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)*\.workers\.dev(\/[\w\-\/]*)?$/.test(String(CFG.ia_url||"")) ? CFG.ia_url : "";
 const zapC = msg => `https://wa.me/${ZAP_CONSTRUTORA}?text=${encodeURIComponent(msg)}`;
 const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
 const num = s => Number(String(s).replace(/\./g,"").replace(",",".").replace(/[^\d.]/g,"")) || 0;
@@ -912,7 +913,7 @@ function addOpcoes(lista){
 function entrada(on,ph){ $("chatEntrada").classList.toggle("off",!on); $("chatInput").placeholder=ph||"Digite aqui…"; if(on) setTimeout(()=>$("chatInput").focus(),50); }
 
 function menu(){
-  fluxo=null; passo=0; resp={}; entrada(false);
+  ia=false; fluxo=null; passo=0; resp={}; entrada(false);
   botDiz("Olá! 👋 Sou o assistente do Marcio Veiga, corretor e construtor em Chapadão do Sul e região. Como posso te ajudar?",()=>{
     addOpcoes([
       ["Quero vender meu imóvel",()=>iniciar("vender")],
@@ -921,6 +922,7 @@ function menu(){
       ["Quero alugar um imóvel",()=>iniciar("alugar")],
       ["Quero construir",()=>iniciar("construir")],
       ["Simular financiamento",()=>iniciar("financiar")],
+      ...(IA_URL?[["Tirar uma dúvida",()=>{ addMsg("Tirar uma dúvida","eu"); modoIA(); }]]:[]),
       ["Falar direto com o Marcio",()=>{ addMsg("Falar direto com o Marcio","eu"); window.open(zap("Olá Marcio! Vim pelo site chapadaoimoveis.com.br"),"_blank"); botDiz("Abri o WhatsApp do Marcio para você. Se preferir, posso continuar te ajudando por aqui.",()=>addOpcoes([["Voltar ao início",menu]])); }]
     ]);
   });
@@ -950,7 +952,27 @@ function finalizar(){
     ]);
   });
 }
-$("chatEntrada").onsubmit=e=>{ e.preventDefault(); const v=$("chatInput").value.trim(); if(!v||!fluxo) return; $("chatInput").value=""; responder(v); };
+let ia=false, iaHist=[], iaOcupado=false;
+function modoIA(){ ia=true; iaHist=[]; botDiz("Pode perguntar! Sei tudo sobre os imóveis do site, financiamento e construção.",()=>{ entrada(true,"Escreva sua dúvida…"); addOpcoes([["Voltar ao início",()=>{ ia=false; menu(); }]]); }); }
+async function perguntarIA(v){
+  if(iaOcupado) return; iaOcupado=true;
+  corpo.querySelectorAll(".opcoes").forEach(o=>o.remove());
+  addMsg(v,"eu"); iaHist.push({role:"user",content:v.slice(0,600)});
+  const t=document.createElement("div"); t.className="digitando"; t.innerHTML="<span></span><span></span><span></span>"; corpo.appendChild(t); rolar();
+  let r=null;
+  try{ const ctl=new AbortController(); const to=setTimeout(()=>ctl.abort(),20000);
+    const res=await fetch(IA_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mensagens:iaHist.slice(-8)}),signal:ctl.signal});
+    clearTimeout(to); if(res.ok) r=await res.json(); }catch(e){}
+  t.remove(); iaOcupado=false;
+  const txt=(r&&r.resposta)||"Agora não consegui responder. Fale com o Marcio no WhatsApp!";
+  addMsg(txt); iaHist.push({role:"assistant",content:txt});
+  const op=[];
+  if(!r||r.whatsapp||!r.resposta){ const resumo=iaHist.filter(m=>m.role==="user").map(m=>"• "+m.content).slice(-3).join("\n");
+    op.push(["Falar com o Marcio no WhatsApp",()=>{ window.open(zap("Olá Marcio! Vim pelo site chapadaoimoveis.com.br.\n"+resumo),"_blank"); addMsg("Falar com o Marcio no WhatsApp","eu"); },"btn-zap"]); }
+  op.push(["Voltar ao início",()=>{ ia=false; menu(); }]);
+  addOpcoes(op); entrada(true,"Escreva sua dúvida…");
+}
+$("chatEntrada").onsubmit=e=>{ e.preventDefault(); const v=$("chatInput").value.trim(); if(!v) return; if(ia){ $("chatInput").value=""; perguntarIA(v); return; } if(!fluxo) return; $("chatInput").value=""; responder(v); };
 function abrirChat(){ $("chat").classList.add("aberto"); $("chatBtnTxt").textContent="Fechar"; if(!iniciado){ iniciado=true; menu(); } }
 function fecharChat(){ $("chat").classList.remove("aberto"); $("chatBtnTxt").textContent="Atendimento"; }
 $("chatBtn").onclick=()=> $("chat").classList.contains("aberto")?fecharChat():abrirChat();
