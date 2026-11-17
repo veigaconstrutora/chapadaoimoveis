@@ -129,7 +129,7 @@
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-const PADRAO={whatsapp:"5567996936202",creci:"14735"};
+const PADRAO={whatsapp:"5567996836202",creci:"14735"};
 const EXEMPLOS=[{cod:"CS001",titulo:"Casa 3 quartos com suíte e área gourmet",cidade:"Chapadão do Sul",bairro:"Jardim Paraíso",negocio:"Venda",tipo:"Casa",preco:420000,quartos:3,suites:1,banheiros:2,vagas:2,area:180,financia:true,fotos:[],status:"Disponível",descricao:"Casa ampla com sala integrada, cozinha planejada e área gourmet com churrasqueira."},
  {cod:"CR001",titulo:"Casa 2 quartos, ideal para Minha Casa Minha Vida",cidade:"Costa Rica",bairro:"Centro",negocio:"Venda",tipo:"Casa",preco:235000,quartos:2,banheiros:1,vagas:1,area:62,financia:true,fotos:[],status:"Vendido",descricao:"Casa nova, pronta para morar."}];
 const fixCod=v=>{const s=String(v||"").toUpperCase().replace(/[^A-Z0-9]/g,"");const m=s.match(/^([A-Z]{2})([A-Z0-9]+)$/);return m?m[1]+m[2].replace(/O/g,"0"):s;};
@@ -206,7 +206,7 @@ function arteImovel(ctx,W,H,im,imgs,story){
   ctx.fillStyle="rgba(232,241,238,.7)";ctx.font=`600 ${story?32:28}px ${F.man}`;
   const rod=`Código ${im.cod}  ·  chapadaoimoveis.com.br  ·  CRECI-MS ${CFG.creci||""}`;
   ctx.fillText(rod,64,H-(story?70:56));
-  if(story){ctx.fillStyle="#1FAA59";arred(ctx,64,H-250,W-128,110,55);ctx.fill();ctx.fillStyle="#fff";ctx.font=`700 44px ${F.man}`;ctx.textAlign="center";ctx.fillText("Chame no WhatsApp: (67) 99693-6202",W/2,H-180);ctx.textAlign="left";}
+  if(story){ctx.fillStyle="#1FAA59";arred(ctx,64,H-250,W-128,110,55);ctx.fill();ctx.fillStyle="#fff";ctx.font=`700 44px ${F.man}`;ctx.textAlign="center";ctx.fillText("Chame no WhatsApp: (67) 99683-6202",W/2,H-180);ctx.textAlign="left";}
 }
 function arteFoto(ctx,W,H,img,im,n,total){
   ctx.fillStyle="#123F33";ctx.fillRect(0,0,W,H);
@@ -222,7 +222,7 @@ function arteFinal(ctx,W,H,im){
   for(const l of quebrar(ctx,im.status==="Vendido"?"Quer vender o seu também?":"Gostou? Agende sua visita.",W-160)){ctx.fillText(l,80,y);y+=106;}
   ctx.font=`600 40px ${F.man}`;ctx.fillStyle="rgba(232,241,238,.9)";y+=20;
   for(const t of [`Código ${im.cod}`,"Fotos e detalhes no site","Simulação de financiamento grátis"]){ctx.fillStyle="#2BC572";ctx.beginPath();ctx.arc(98,y-13,11,0,7);ctx.fill();ctx.fillStyle="rgba(232,241,238,.92)";ctx.fillText(t,128,y);y+=66;}
-  ctx.fillStyle="#1FAA59";arred(ctx,80,H-260,W-160,110,55);ctx.fill();ctx.fillStyle="#fff";ctx.font=`700 44px ${F.man}`;ctx.textAlign="center";ctx.fillText("WhatsApp (67) 99693-6202",W/2,H-190);
+  ctx.fillStyle="#1FAA59";arred(ctx,80,H-260,W-160,110,55);ctx.fill();ctx.fillStyle="#fff";ctx.font=`700 44px ${F.man}`;ctx.textAlign="center";ctx.fillText("WhatsApp (67) 99683-6202",W/2,H-190);
   ctx.font=`600 30px ${F.man}`;ctx.fillStyle="rgba(232,241,238,.8)";ctx.fillText(`chapadaoimoveis.com.br · CRECI-MS ${CFG.creci||""}`,W/2,H-90);ctx.textAlign="left";
 }
 function arteCaptacao(ctx,W,H,story){
@@ -232,15 +232,15 @@ function arteCaptacao(ctx,W,H,story){
   let y=story?420:300;for(const l of quebrar(ctx,"Quer vender ou alugar seu imóvel?",W-160)){ctx.fillText(l,80,y);y+=story?128:112;}
   ctx.font=`600 42px ${F.man}`;y+=30;
   for(const t of ["Avaliação gratuita, sem compromisso","Anúncio com fotos e página própria","Atendimento a quem financia pelo MCMV"]){ctx.fillStyle="#2BC572";ctx.beginPath();ctx.arc(98,y-14,12,0,7);ctx.fill();ctx.fillStyle="rgba(232,241,238,.92)";ctx.fillText(t,128,y);y+=70;}
-  ctx.fillStyle="#1FAA59";arred(ctx,80,H-250,W-160,110,55);ctx.fill();ctx.fillStyle="#fff";ctx.font=`700 44px ${F.man}`;ctx.textAlign="center";ctx.fillText("WhatsApp (67) 99693-6202",W/2,H-180);
+  ctx.fillStyle="#1FAA59";arred(ctx,80,H-250,W-160,110,55);ctx.fill();ctx.fillStyle="#fff";ctx.font=`700 44px ${F.man}`;ctx.textAlign="center";ctx.fillText("WhatsApp (67) 99683-6202",W/2,H-180);
   ctx.font=`600 30px ${F.man}`;ctx.fillStyle="rgba(232,241,238,.8)";ctx.fillText(`chapadaoimoveis.com.br · Marcio Veiga, CRECI-MS ${CFG.creci||""}`,W/2,H-80);ctx.textAlign="left";
 }
 
 /* ---------- copy ---------- */
 function copyCaptacao(){
   const c=CFG.creci||"";
-  if(estilo==="curta") return `🏡 Quer vender ou alugar seu imóvel? Avaliação gratuita!\n📲 (67) 99693-6202 · chapadaoimoveis.com.br`;
-  return `🏡 Quer vender ou alugar seu imóvel?\n\nFaço a avaliação gratuita e anuncio com fotos, vídeo e página própria no site, com divulgação em Chapadão do Sul, Costa Rica, Paraíso das Águas e Figueirão.\n\n✅ Atendo quem financia pelo Minha Casa Minha Vida\n✅ Cuido da negociação e da documentação até a escritura\n\n📲 Chame no WhatsApp (67) 99693-6202\n🌐 chapadaoimoveis.com.br\n\nMarcio Veiga · Corretor de Imóveis · CRECI-MS ${c}\n\n#chapadaodosul #imoveischapadao #costaricams #paraisodasaguas #figueirao #vendaseuimovel #corretordeimoveis #minhacasaminhavida`;
+  if(estilo==="curta") return `🏡 Quer vender ou alugar seu imóvel? Avaliação gratuita!\n📲 (67) 99683-6202 · chapadaoimoveis.com.br`;
+  return `🏡 Quer vender ou alugar seu imóvel?\n\nFaço a avaliação gratuita e anuncio com fotos, vídeo e página própria no site, com divulgação em Chapadão do Sul, Costa Rica, Paraíso das Águas e Figueirão.\n\n✅ Atendo quem financia pelo Minha Casa Minha Vida\n✅ Cuido da negociação e da documentação até a escritura\n\n📲 Chame no WhatsApp (67) 99683-6202\n🌐 chapadaoimoveis.com.br\n\nMarcio Veiga · Corretor de Imóveis · CRECI-MS ${c}\n\n#chapadaodosul #imoveischapadao #costaricams #paraisodasaguas #figueirao #vendaseuimovel #corretordeimoveis #minhacasaminhavida`;
 }
 function copyImovel(im){
   const c=CFG.creci||"", link=linkDe(im), det=detalhes(im).join(" · "), local=`${im.bairro?im.bairro+", ":""}${im.cidade}`;
@@ -251,21 +251,21 @@ function copyImovel(im){
   const chamadaSelo={"Acabou de entrar":"🆕 ACABOU DE ENTRAR!","Baixou o preço":"🔻 BAIXOU O PREÇO!","Oportunidade":"🔥 OPORTUNIDADE!","Exclusivo":"⭐ EXCLUSIVO!"}[selo]||"";
   if(im.status&&im.status!=="Disponível"){
     const v=im.status.toLowerCase();
-    if(estilo==="curta") return `✅ ${im.status.toUpperCase()}! ${im.titulo}, ${local}.\nQuer ${im.negocio==="Aluguel"?"alugar":"vender"} o seu? 📲 (67) 99693-6202`;
-    return `✅ ${im.status.toUpperCase()}!\n\nMais um negócio fechado: ${im.titulo}, em ${local}, foi ${v}.\n\nObrigado pela confiança! 🙏\n\nQuer ${im.negocio==="Aluguel"?"alugar":"vender"} o seu imóvel também? Faço a avaliação gratuita e cuido de tudo até a escritura.\n📲 WhatsApp (67) 99693-6202\n🌐 chapadaoimoveis.com.br\n\n${assin}\n\n${tags} #vendido #negociofechado`;
+    if(estilo==="curta") return `✅ ${im.status.toUpperCase()}! ${im.titulo}, ${local}.\nQuer ${im.negocio==="Aluguel"?"alugar":"vender"} o seu? 📲 (67) 99683-6202`;
+    return `✅ ${im.status.toUpperCase()}!\n\nMais um negócio fechado: ${im.titulo}, em ${local}, foi ${v}.\n\nObrigado pela confiança! 🙏\n\nQuer ${im.negocio==="Aluguel"?"alugar":"vender"} o seu imóvel também? Faço a avaliação gratuita e cuido de tudo até a escritura.\n📲 WhatsApp (67) 99683-6202\n🌐 chapadaoimoveis.com.br\n\n${assin}\n\n${tags} #vendido #negociofechado`;
   }
   const topo=chamadaSelo?chamadaSelo+"\n\n":"";
   if(estilo==="curta") return `${chamadaSelo?chamadaSelo+" ":""}🏡 ${im.titulo}\n📍 ${local} · 💰 ${preco}\n👉 ${link}`;
   if(estilo==="familia"){
-    if(im.negocio==="Aluguel") return `${topo}Um lar pronto para a sua família começar uma nova fase. 🏡\n\n${im.titulo}, em ${local}.\n${det?"✅ "+det+"\n":""}💰 ${preco}\n\nVenha conhecer! Agende sua visita pelo WhatsApp (67) 99693-6202.\n🔎 Fotos e detalhes: ${link}\n\n${assin}\n\n${tags} #aluguel #lardocelar`;
+    if(im.negocio==="Aluguel") return `${topo}Um lar pronto para a sua família começar uma nova fase. 🏡\n\n${im.titulo}, em ${local}.\n${det?"✅ "+det+"\n":""}💰 ${preco}\n\nVenha conhecer! Agende sua visita pelo WhatsApp (67) 99683-6202.\n🔎 Fotos e detalhes: ${link}\n\n${assin}\n\n${tags} #aluguel #lardocelar`;
     const p=im.financia?`\n\n💚 Aceita financiamento e FGTS.\nVeja em 1 minuto quanto você consegue financiar: chapadaoimoveis.com.br/#simulador\nE a simulação oficial é por nossa conta.`:"";
-    return `${topo}Sair do aluguel e ter a casa própria é possível. 🏡💚\n\n${im.titulo}, em ${local}.\n${det?"✅ "+det+"\n":""}💰 ${preco}${p}\n\n📲 Chame no WhatsApp (67) 99693-6202\n🔎 Fotos e detalhes: ${link}\n\n${assin}\n\n${tags} #minhacasaminhavida #casapropria #saiadoaluguel`;
+    return `${topo}Sair do aluguel e ter a casa própria é possível. 🏡💚\n\n${im.titulo}, em ${local}.\n${det?"✅ "+det+"\n":""}💰 ${preco}${p}\n\n📲 Chame no WhatsApp (67) 99683-6202\n🔎 Fotos e detalhes: ${link}\n\n${assin}\n\n${tags} #minhacasaminhavida #casapropria #saiadoaluguel`;
   }
   if(estilo==="investidor"){
     const m2=im.area&&im.negocio!=="Aluguel"?` · ${brl(im.preco/im.area)} por m²`:"";
-    return `${topo}📈 Para quem quer investir em imóvel na região\n\n${im.titulo}\n📍 ${local}\n💰 ${preco}${m2}\n${det?"✅ "+det+"\n":""}\n${im.tipo==="Terreno"?"Ideal para construir e vender ou para renda com aluguel.":"Boa opção para renda com aluguel ou para revenda."} Documentação analisada antes da negociação.\n\n📲 WhatsApp (67) 99693-6202 · código ${im.cod}\n🔎 ${link}\n\n${assin}\n\n${tags} #investimentoimobiliario #rendapassiva`;
+    return `${topo}📈 Para quem quer investir em imóvel na região\n\n${im.titulo}\n📍 ${local}\n💰 ${preco}${m2}\n${det?"✅ "+det+"\n":""}\n${im.tipo==="Terreno"?"Ideal para construir e vender ou para renda com aluguel.":"Boa opção para renda com aluguel ou para revenda."} Documentação analisada antes da negociação.\n\n📲 WhatsApp (67) 99683-6202 · código ${im.cod}\n🔎 ${link}\n\n${assin}\n\n${tags} #investimentoimobiliario #rendapassiva`;
   }
-  return `${topo}🏡 ${im.titulo}\n📍 ${local} - MS\n💰 ${preco}${im.financia&&im.negocio!=="Aluguel"?" · aceita financiamento":""}\n\n${det?"✅ "+det+"\n":""}${im.descricao?im.descricao+"\n":""}\n🔎 Fotos e detalhes: ${link}\n📲 WhatsApp (67) 99693-6202 · código ${im.cod}\n\n${assin}\n\n${tags}`;
+  return `${topo}🏡 ${im.titulo}\n📍 ${local} - MS\n💰 ${preco}${im.financia&&im.negocio!=="Aluguel"?" · aceita financiamento":""}\n\n${det?"✅ "+det+"\n":""}${im.descricao?im.descricao+"\n":""}\n🔎 Fotos e detalhes: ${link}\n📲 WhatsApp (67) 99683-6202 · código ${im.cod}\n\n${assin}\n\n${tags}`;
 }
 
 /* ---------- fluxo ---------- */
