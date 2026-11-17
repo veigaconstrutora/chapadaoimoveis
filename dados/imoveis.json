@@ -75,28 +75,28 @@
     "publicado": true,
     "status": "Disponível",
     "cod": "CS004",
-    "titulo": "Vende se terreno ",
+    "titulo": "Terreno 600 m² no Flamboyant",
     "negocio": "Venda",
     "tipo": "Terreno",
     "cidade": "Chapadão do Sul",
-    "bairro": "Flamboyant ",
+    "bairro": "Flamboyant",
     "preco": 260000,
     "terreno": 600,
     "financia": true,
     "fotos": [
       "/fotos/whatsapp-image-2026-11-16-at-151254.jpeg"
     ],
-    "descricao": "Ótima localização Rua Pará próximo a avenida Mato grosso do Sul."
+    "descricao": "Terreno de 600 m² no bairro Flamboyant, em ótima localização, perto da Avenida Mato Grosso do Sul."
   },
   {
     "publicado": true,
-    "status": "Alugado",
+    "status": "Disponível",
     "cod": "CS005",
-    "titulo": "casa a venda",
+    "titulo": "Casa 3 quartos no Espatódia",
     "negocio": "Venda",
     "tipo": "Casa",
     "cidade": "Chapadão do Sul",
-    "bairro": "Espatodia",
+    "bairro": "Espatódia",
     "preco": 220000,
     "quartos": 3,
     "banheiros": 1,
@@ -106,13 +106,13 @@
       "/fotos/whatsapp-image-2026-11-16-at-151254-2-1.jpeg",
       "/fotos/whatsapp-image-2026-11-16-at-151255.jpeg"
     ],
-    "descricao": "Casa na rua Campo grande, esta alugada, aceita proposta"
+    "descricao": "Casa de 3 quartos no bairro Espatódia. Atualmente alugada, ótima para quem busca renda. Aceita proposta."
   },
   {
     "publicado": true,
-    "status": "Alugado",
+    "status": "Disponível",
     "cod": "CS006",
-    "titulo": "casa a venda",
+    "titulo": "Duas casas no mesmo terreno no Sibipiruna",
     "negocio": "Venda",
     "tipo": "Casa",
     "cidade": "Chapadão do Sul",
@@ -129,40 +129,40 @@
       "/fotos/whatsapp-image-2026-11-16-at-151255-1.jpeg",
       "/fotos/whatsapp-image-2026-11-16-at-151255-2.jpeg"
     ],
-    "descricao": "casas na avenida goias uma na frente e outra nos fundos separadas com murro, proximo ao supermercado DOSUL"
+    "descricao": "Duas casas no mesmo terreno de 525 m², uma na frente e outra nos fundos, separadas por muro. Bairro Sibipiruna, perto de supermercado. Atualmente alugadas, ótimas para renda."
   },
   {
     "publicado": true,
     "status": "Disponível",
     "cod": "CS007",
-    "titulo": "TERRENO A VENDA",
+    "titulo": "Terreno murado 525 m² no Flamboyant",
     "negocio": "Venda",
     "tipo": "Terreno",
     "cidade": "Chapadão do Sul",
-    "bairro": "FLAMBOYANT",
+    "bairro": "Flamboyant",
     "preco": 450000,
     "terreno": 525,
     "financia": true,
     "fotos": [
       "/fotos/whatsapp-image-2026-11-16-at-151256-1-1.jpeg"
     ],
-    "descricao": "TERRENO NA AVENIDA GOIAS MURRADO, PROXIMO AO RESINTO DA EXPOSUL."
+    "descricao": "Terreno murado de 525 m² no bairro Flamboyant, de frente para avenida, perto do recinto da Exposul."
   },
   {
     "publicado": true,
     "status": "Disponível",
     "cod": "CS008",
-    "titulo": "TERRENO",
+    "titulo": "Terreno 360 m² no Planalto",
     "negocio": "Venda",
     "tipo": "Terreno",
     "cidade": "Chapadão do Sul",
-    "bairro": "PLANALTO",
+    "bairro": "Planalto",
     "preco": 170000,
     "terreno": 360,
     "financia": true,
     "fotos": [
       "/fotos/whatsapp-image-2026-11-16-at-151253-1.jpeg"
     ],
-    "descricao": "TERRENO NA AVENIDA P14 BAIRRO ESPLANADA"
+    "descricao": "Terreno de 360 m² de frente para avenida, pronto para construir."
   }
 ]
