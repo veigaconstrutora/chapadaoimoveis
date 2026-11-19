@@ -741,7 +741,7 @@ function gal(d){
 }
 function fechar(){ $("modal").classList.remove("aberto"); document.body.classList.remove("travado"); if(location.hash.startsWith("#imovel-")) history.replaceState(null,"",location.pathname+"#imoveis"); }
 function compartilhar(){
-  const im=imAberto, link=`https://${site}/#imovel-${im.cod.toLowerCase()}`;
+  const im=imAberto, link=`https://${site}/imovel/${im.cod.toLowerCase()}/`;
   window.open(`https://wa.me/?text=${encodeURIComponent(`Olha esse imóvel: ${im.titulo} - ${brl(im.preco)}\n${link}`)}`,"_blank");
 }
 $("modal").addEventListener("click",e=>{ if(e.target.id==="modal") fechar(); });

@@ -21,4 +21,4 @@ jobs:
           git config user.name "otimizador-de-fotos"
           git config user.email "actions@users.noreply.github.com"
           git add fotos
-          git diff --cached --quiet || (git commit -m "Otimiza fotos" && git push)
+          git diff --cached --quiet || (git commit -m "Otimiza fotos" && (git push || (git pull --rebase -q && git push)))

@@ -179,7 +179,7 @@ function selosArte(ctx,im){
   else if(im.financia&&im.negocio!=="Aluguel") s("Aceita financiamento","#E9A93E","#1d1406");
 }
 const detalhes=im=>[im.quartos?`${im.quartos} quarto${im.quartos>1?"s":""}`:"",im.suites?`${im.suites} suíte${im.suites>1?"s":""}`:"",im.vagas?`${im.vagas} vaga${im.vagas>1?"s":""}`:"",im.area?`${im.area} m²`:""].filter(Boolean);
-const linkDe=im=>`https://chapadaoimoveis.com.br/#imovel-${im.cod.toLowerCase()}`;
+const linkDe=im=>`https://chapadaoimoveis.com.br/imovel/${im.cod.toLowerCase()}/`;
 function parcelaEstimada(preco){const fin=preco*0.8,n=360,i=Math.pow(1.08,1/12)-1;return fin/n+fin*i;}
 
 /* ---------- artes ---------- */

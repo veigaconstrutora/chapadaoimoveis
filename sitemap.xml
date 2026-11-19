@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://chapadaoimoveis.com.br/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://chapadaoimoveis.com.br/imovel/cs001/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chapadaoimoveis.com.br/imovel/cs002/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chapadaoimoveis.com.br/imovel/cs003/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chapadaoimoveis.com.br/imovel/cs004/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chapadaoimoveis.com.br/imovel/cs005/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chapadaoimoveis.com.br/imovel/cs006/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chapadaoimoveis.com.br/imovel/cs007/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chapadaoimoveis.com.br/imovel/cs008/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>
