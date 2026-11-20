@@ -172,7 +172,7 @@ def pagina(im):
 <meta name="description" content="{e(desc_meta)}">
 <link rel="canonical" href="{url}">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; style-src 'unsafe-inline'; script-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; style-src 'unsafe-inline'; script-src https://static.cloudflareinsights.com; connect-src https://cloudflareinsights.com; base-uri 'none'; form-action 'none'">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#1f4d3a">
@@ -206,6 +206,7 @@ def pagina(im):
 <p class="rodape">Marcio Veiga · Corretor e construtor · CRECI-MS {e(CRECI)}<br><a href="/">Ver todos os imóveis</a></p>
 </main>
 <nav class="acoes"><a class="btn ver" href="/#imovel-{slug}">Ver no site</a><a class="btn zap" href="{e(zap)}" target="_blank" rel="noopener">Chamar no WhatsApp</a></nav>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{{"token": "6b475550a5b547d493e0ae891062e5c9"}}'></script>
 </body>
 </html>
 """

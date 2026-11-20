@@ -184,5 +184,6 @@ function ck(v){try{localStorage.setItem('cookies_guia',v)}catch(e){} if(v==='rec
 try{if(!localStorage.getItem('cookies_guia'))document.getElementById('cookiebar').style.display='flex'}catch(e){}
 document.querySelectorAll('a[href*="pay.kiwify.com.br"]').forEach(function(a){if(location.search){a.href+=(a.href.indexOf('?')<0?'?':'&')+location.search.slice(1)}a.addEventListener('click',function(){if(window.fbq)fbq('track','AddToCart',{content_name:'Guia 2027 Casa Propria',value:37,currency:'BRL'})})});
 </script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "6b475550a5b547d493e0ae891062e5c9"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
